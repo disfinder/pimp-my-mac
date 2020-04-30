@@ -11,6 +11,24 @@
       - maven-completion
       - pip-completion
       - vagrant-completion
+      - autojump
+      - awscli
+      - coreutils
+      - ccze
+      - htop
+      - httpie
+      - jq
+      - lynx
+      - mdp
+      - micro
+      - most
+      - mtr
+      - nmap
+      - pv
+      - tree
+      - watch
+      - wget
+      - youtube-dl
   tasks:
     - name: Setup needed brew packages
       homebrew:
