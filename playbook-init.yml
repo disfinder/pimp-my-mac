@@ -1,0 +1,18 @@
+#!/usr/bin/env ANSIBLE_NOCOWS=1 ansible-playbook
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    - brew_packages:
+      - bash-completion
+      - docker-completion
+      - docker-compose-completion
+      - gradle-completion
+      - maven-completion
+      - pip-completion
+      - vagrant-completion
+  tasks:
+    - name: Setup needed brew packages
+      homebrew:
+        name: "{{ brew_packages }}"
+        state: present
