@@ -3,6 +3,7 @@
   connection: local
   gather_facts: no
   vars:
+    - temp_folder: "/tmp/pimp_my_temp"
     - brew_packages:
       - bash-completion
       - docker-completion
@@ -29,8 +30,41 @@
       - watch
       - wget
       - youtube-dl
+    - dmg_files:
+      - name: Idea
+        url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
+        filename: ideaIC-2019.3.4-jbr8.dmg
+      - name: keepass
+        url: https://github.com/keepassxreboot/keepassxc/releases/download/2.5.4/KeePassXC-2.5.4.dmg
+        filename: KeePassXC-2.5.4.dmg
+    - applications:
+      - name: iTerm
+        url: https://iterm2.com/downloads/stable/iTerm2-3_3_9.zip
+        filename: iTerm2-3_3_9.zip
+        need_unpack: yes
   tasks:
     - name: Setup needed brew packages
       homebrew:
         name: "{{ brew_packages }}"
         state: present
+
+    - name: Create temp
+      file:
+        path: "{{ temp_folder }}"
+        state: directory
+
+    - name: Download applications
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ temp_folder }}/{{ item.filename }}"
+      loop: "{{ applications }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Download dmg_files
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ temp_folder }}/{{ item.filename }}"
+      loop: "{{ dmg_files }}"
+      loop_control:
+        label: "{{ item.name }}"
