@@ -32,6 +32,7 @@
       - youtube-dl
       - grc
       - git
+      - bash-git-prompt
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -43,6 +44,10 @@
       - name: iTerm
         url: https://iterm2.com/downloads/stable/iTerm2-3_3_9.zip
         filename: iTerm2-3_3_9.zip
+        need_unpack: yes
+      - name: VSCode
+        url: https://go.microsoft.com/fwlink/?LinkID=620882
+        filename: vscode.zip
         need_unpack: yes
   tasks:
     - name: Populate bash profile
@@ -75,6 +80,7 @@
             dest: ~/opt/grc.bashrc
 
     - name: Setup needed brew packages
+      tags: brew
       homebrew:
         name: "{{ brew_packages }}"
         state: present
