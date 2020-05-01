@@ -30,6 +30,8 @@
       - watch
       - wget
       - youtube-dl
+      - grc
+      - git
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -43,6 +45,35 @@
         filename: iTerm2-3_3_9.zip
         need_unpack: yes
   tasks:
+    - name: Populate bash profile
+      tags: bash
+      block:
+        - name: Understand who I am
+          become: false
+          command: whoami
+          register: raw_whoami
+        - name: Ensure bash is set as user shell
+          user:
+            name: "{{ raw_whoami.stdout }}"
+            shell: /bin/bash
+        - name: Template bash_profile
+          template:
+            src: bash.bashrc
+            dest: "~/.bash_profile"
+        - name: Transform bashrc
+          file:
+            src: ~/.bash_profile
+            dest: ~/.bashrc
+            state: link
+        - name: Make home opt dir
+          file:
+            dest: ~/opt
+            state: directory
+        - name: Template GRC resource
+          template:
+            src: grc.bashrc
+            dest: ~/opt/grc.bashrc
+
     - name: Setup needed brew packages
       homebrew:
         name: "{{ brew_packages }}"
