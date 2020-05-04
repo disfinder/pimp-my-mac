@@ -84,6 +84,10 @@
           template:
             src: grc.bashrc
             dest: ~/opt/grc.bashrc
+        - name: Template inputrc resource (make ctrl-arrows work again)
+          template:
+            src: inputrc.bashrc
+            dest: ~/.inputrc
 
     - name: Setup needed brew packages
       tags: brew
