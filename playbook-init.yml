@@ -33,6 +33,7 @@
       - grc
       - git
       - bash-git-prompt
+      - ansible # why not?
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -61,15 +62,20 @@
           user:
             name: "{{ raw_whoami.stdout }}"
             shell: /bin/bash
+        # By default, macos use login shell every time
+        # https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc
+        # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other systems, but you can configure that in the preferences.
         - name: Template bash_profile
           template:
             src: bash.bashrc
             dest: "~/.bash_profile"
-        - name: Transform bashrc
-          file:
-            src: ~/.bash_profile
-            dest: ~/.bashrc
-            state: link
+        # Why would we need that?
+        # TODO: remove or describe.
+        # - name: Link bashrc
+        #   file:
+        #     src: ~/.bash_profile
+        #     dest: ~/.bashrc
+        #     state: link
         - name: Make home opt dir
           file:
             dest: ~/opt
