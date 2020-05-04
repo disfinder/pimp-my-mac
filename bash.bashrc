@@ -115,3 +115,6 @@ open -W -a Meld --args $1 $2
 
 #export LC_ALL=en_US.UTF-8
 #export LANG=en_US.UTF-8
+
+# suppress annoying zsh message in Catalina
+export BASH_SILENCE_DEPRECATION_WARNING=1
