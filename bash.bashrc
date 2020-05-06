@@ -70,7 +70,11 @@ fi
 #You should set GROOVY_HOME:
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export PATH="${PATH}:~/opt/bin/maestro-cli/bin"
-export JAVA_HOME=$(/usr/libexec/java_home)
+
+if [ -f /usr/libexec/java_home ]; then
+    export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
 
 grepssh()
   {
