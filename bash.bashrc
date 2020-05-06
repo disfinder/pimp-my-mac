@@ -24,7 +24,8 @@ export HISTTIMEFORMAT="[%F %T] "
 ########################
 
 
-GIT_PROMPT_START="\[\033[01;33m\]\t \[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
+if [[ $IN_NIX_SHELL ]]; then _IN_NIX="NIX:${IN_NIX_SHELL}" ; else _IN_NIX="login"; fi
+GIT_PROMPT_START="\[\033[01;33m\]\t \[\033[01;32m\] (${_IN_NIX}) \u@\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
 GIT_PROMPT_END="\[\033[01;34m\] \n\$\[\033[00m\] "
 
  if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
