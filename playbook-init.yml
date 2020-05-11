@@ -5,39 +5,39 @@
   vars:
     - temp_folder: "/tmp/pimp_my_temp"
     - brew_packages:
-      - bash-completion
-      - docker-completion
-      - docker-compose-completion
-      - gradle-completion
-      - maven-completion
-      - pip-completion
-      - vagrant-completion
+      - ansible # why not?
       - autojump
       - awscli
-      - coreutils
+      - bash-completion
+      - bash-git-prompt
       - ccze
+      - coreutils
+      - docker-completion
+      - docker-compose-completion
+      - git
+      - gpg
+      - gradle-completion
+      - grc
       - htop
       - httpie
       - jq
       - lynx
+      - maven-completion
+      - mc
       - mdp
       - micro
       - most
       - mtr
+      - nano
+      - ncdu
       - nmap
+      - pip-completion
       - pv
       - tree
+      - vagrant-completion
       - watch
       - wget
       - youtube-dl
-      - grc
-      - git
-      - bash-git-prompt
-      - ansible # why not?
-      - gpg
-      - ncdu
-      - nano
-      - mc
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
