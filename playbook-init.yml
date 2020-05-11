@@ -36,6 +36,8 @@
       - ansible # why not?
       - gpg
       - ncdu
+      - nano
+      - mc
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -52,6 +54,7 @@
         url: https://go.microsoft.com/fwlink/?LinkID=620882
         filename: vscode.zip
         need_unpack: yes
+      # sourcetree
   tasks:
     - name: Populate bash profile
       tags: bash
