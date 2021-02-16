@@ -5,7 +5,7 @@
   vars:
     - temp_folder: "/tmp/pimp_my_temp"
     - brew_packages:
-      - ansible # why not?
+      # - ansible # why not?
       - autojump
       - awscli
       - bash-completion
