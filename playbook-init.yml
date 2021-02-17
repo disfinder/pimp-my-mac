@@ -102,6 +102,19 @@
             src: inputrc.bashrc
             dest: ~/.inputrc
 
+    - name: Template git-related files
+      tags: git
+      template:
+        src: item.src
+        dest: item.dest
+      with_items:
+        - src: "gitconfig"
+          dest: "~/.gitconfig"
+        - src: "gitignore_global"
+          dest: "~/.gitignore_global"
+        - src: "gitmessage"
+          dest: "~/.gitmessage"
+
     - name: Create temp
       file:
         path: "{{ temp_folder }}"
