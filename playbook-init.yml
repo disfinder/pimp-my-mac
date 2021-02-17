@@ -8,6 +8,7 @@
       # - ansible # why not?
       - autojump
       - awscli
+      - bash
       - bash-completion
       - bash-git-prompt
       - ccze
@@ -56,6 +57,12 @@
         need_unpack: yes
       # sourcetree
   tasks:
+    - name: Setup needed brew packages
+      tags: brew
+      homebrew:
+        name: "{{ brew_packages }}"
+        state: present
+
     - name: Populate bash profile
       tags: bash
       block:
@@ -93,12 +100,6 @@
           template:
             src: inputrc.bashrc
             dest: ~/.inputrc
-
-    - name: Setup needed brew packages
-      tags: brew
-      homebrew:
-        name: "{{ brew_packages }}"
-        state: present
 
     - name: Create temp
       file:
