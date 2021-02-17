@@ -7,13 +7,11 @@ export HISTCONTROL=ignoreboth:erasedups
 # HISTSIZE=1000
 # HISTFILESIZE=20000
 shopt -s histappend
-PROMPT_COMMAND='history -a; history -c; history -r'
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }history -a; history -c; history -r"
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
-export HISTFILESIZE=
-# 1000000
-export HISTSIZE=
-# 2000000
+export HISTFILESIZE=1000000
+export HISTSIZE=2000000
 export HISTTIMEFORMAT="[%F %T] "
 #export HISTIGNORE="ls:ps:history"
 # Change the file location because certain bash sessions truncate .bash_history file upon close.
@@ -68,12 +66,12 @@ fi
   fi
 
 #You should set GROOVY_HOME:
-export GROOVY_HOME=/usr/local/opt/groovy/libexec
-export PATH="${PATH}:~/opt/bin/maestro-cli/bin"
+# export GROOVY_HOME=/usr/local/opt/groovy/libexec
+# export PATH="${PATH}:~/opt/bin/maestro-cli/bin"
 
-if [ -f /usr/libexec/java_home ]; then
-    export JAVA_HOME=$(/usr/libexec/java_home)
-fi
+# if [ -f /usr/libexec/java_home ]; then
+#     export JAVA_HOME=$(/usr/libexec/java_home)
+# fi
 
 
 grepssh()
@@ -123,3 +121,5 @@ open -W -a Meld --args $1 $2
 
 # suppress annoying zsh message in Catalina
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+source .project.bashrc

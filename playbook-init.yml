@@ -23,6 +23,7 @@
       - httpie
       - jq
       - lynx
+      - maven
       - maven-completion
       - mc
       - mdp
@@ -101,6 +102,10 @@
           template:
             src: inputrc.bashrc
             dest: ~/.inputrc
+        - name: Template project bash rc
+          template:
+            src: project.bashrc
+            dest: ~/.project.bashrc
 
     - name: Template git-related files
       tags: git
@@ -121,6 +126,7 @@
         state: directory
 
     - name: Download applications
+      tags: never
       get_url:
         url: "{{ item.url }}"
         dest: "{{ temp_folder }}/{{ item.filename }}"
@@ -129,6 +135,7 @@
         label: "{{ item.name }}"
 
     - name: Download dmg_files
+      tags: never
       get_url:
         url: "{{ item.url }}"
         dest: "{{ temp_folder }}/{{ item.filename }}"
