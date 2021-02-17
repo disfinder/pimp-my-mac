@@ -2,6 +2,8 @@
 - hosts: localhost
   connection: local
   gather_facts: no
+  vars_files:
+    - project_vars.yaml
   vars:
     - temp_folder: "/tmp/pimp_my_temp"
     - brew_packages:

@@ -1,6 +1,6 @@
 [user]
-	name = some user
-	email = some@email
+	name = {{ git_username }}
+	email = {{ git_email }}
 
 [core]
   editor = micro
