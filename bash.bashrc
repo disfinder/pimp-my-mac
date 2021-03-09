@@ -122,4 +122,4 @@ open -W -a Meld --args $1 $2
 # suppress annoying zsh message in Catalina
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-source .project.bashrc
+source ~/.project.bashrc
