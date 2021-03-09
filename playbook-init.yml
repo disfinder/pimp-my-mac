@@ -17,6 +17,7 @@
       - coreutils
       - docker-completion
       - docker-compose-completion
+      - gh
       - git
       - gpg
       - gradle-completion
@@ -38,10 +39,12 @@
       - pip-completion
       - pv
       - tree
+      - vagrant
       - vagrant-completion
       - watch
       - wget
       - youtube-dl
+      - yq
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -70,10 +73,12 @@
       tags: bash
       block:
         - name: Understand who I am
+          tags: bash_shell
           become: false
           command: whoami
           register: raw_whoami
         - name: Ensure bash is set as user shell
+          tags: bash_shell
           become: yes
           user:
             name: "{{ raw_whoami.stdout }}"
