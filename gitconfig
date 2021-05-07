@@ -3,7 +3,7 @@
 	email = {{ git_email }}
 
 [core]
-  editor = micro
+  editor = code --wait
   excludesfile = ~/.gitignore_global
 
 [diff]
@@ -48,7 +48,7 @@
     #
     # log commands
     ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [A:%an/C:%cn]" --decorate --date=iso
-    ls10 = ls -10
+    l = ls -10
     lsr = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --date=relative
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --numstat
     lc  = "!f() { git ll "$1"^.."$1"; }; f"
@@ -144,6 +144,7 @@
 
     rw='review'
     rbc="rebase --continue"
+    rbi="!f() { git rebase -i HEAD~$1; }; f"
 #
 [pull]
         default = current
