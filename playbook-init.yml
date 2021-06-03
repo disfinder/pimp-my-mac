@@ -91,7 +91,7 @@
         # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other systems, but you can configure that in the preferences.
         - name: Template bash_profile
           template:
-            src: bash.bashrc
+            src: bash/bash.bashrc
             dest: "~/.bash_profile"
         # Why would we need that?
         # TODO: remove or describe.
@@ -106,15 +106,15 @@
             state: directory
         - name: Template GRC resource
           template:
-            src: grc.bashrc
+            src: bash/grc.bashrc
             dest: ~/opt/grc.bashrc
         - name: Template inputrc resource (make ctrl-arrows work again)
           template:
-            src: inputrc.bashrc
+            src: bash/inputrc.bashrc
             dest: ~/.inputrc
         - name: Template project bash rc
           template:
-            src: project.bashrc
+            src: bash/project.bashrc
             dest: ~/.project.bashrc
 
     - name: Template git-related files
