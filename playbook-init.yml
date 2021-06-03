@@ -123,11 +123,11 @@
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
       with_items:
-        - src: "gitconfig"
+        - src: "git/gitconfig"
           dest: "~/.gitconfig"
-        - src: "gitignore_global"
+        - src: "git/gitignore_global"
           dest: "~/.gitignore_global"
-        - src: "gitmessage"
+        - src: "git/gitmessage"
           dest: "~/.gitmessage"
 
     - name: Create temp
