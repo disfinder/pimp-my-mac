@@ -45,6 +45,7 @@
     ca = commit --amend
     amend = commit --amend
     caa = commit -a --amend -C HEAD
+    can = commit --amend --no-edit
     #
     # log commands
     # ls author committer
