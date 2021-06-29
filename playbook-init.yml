@@ -114,7 +114,7 @@
             dest: ~/.inputrc
         - name: Template project bash rc
           template:
-            src: bash/project.bashrc
+            src: project.bashrc
             dest: ~/.project.bashrc
 
     - name: Template git-related files
