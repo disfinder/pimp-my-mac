@@ -59,6 +59,7 @@
     fl = log -u
     filelog = log -u
     flist = show --pretty="format:" --name-only
+    g = log --graph --oneline --all
     #
     # diff
     d = diff --word-diff
