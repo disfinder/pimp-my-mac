@@ -121,4 +121,23 @@ open -W -a Meld --args $1 $2
 # suppress annoying zsh message in Catalina
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+eval "$(gh completion -s bash)"
+
+alias d='docker'
+complete -F _docker d
+
+# caws == color aws
+# this order - for easier modification of string `aws foo --bar` -> `caws foo --bar`
+caws()
+    {
+        # TODO: do not redirect to yq if help is in parameters
+        aws --output yaml $@ | yq eval --colors
+    }
+
+# https://stackoverflow.com/questions/56448535/bash-function-preserving-tab-completion
+complete -C aws_completer caws
+alias aws='aws --color on'
+
+alias kubectl="kubecolor"
+
 source ~/.project.bashrc
