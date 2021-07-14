@@ -42,13 +42,15 @@
       - pip-completion
       - pv
       - tree
-      - vagrant
       - vagrant-completion
       - watch
       - wget
       - youtube-dl
       - yq
       - diff-so-fancy
+      - dty1er/tap/kubecolor
+    - brew_casks:
+      - vagrant
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -71,6 +73,11 @@
       tags: brew
       homebrew:
         name: "{{ brew_packages }}"
+        state: present
+    - name: Setup needed brew casks
+      tags: brew
+      homebrew_cask:
+        name: "{{ brew_casks }}"
         state: present
 
     - name: Populate bash profile
