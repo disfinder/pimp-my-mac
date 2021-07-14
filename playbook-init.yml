@@ -3,7 +3,7 @@
   connection: local
   gather_facts: no
   vars_files:
-    - project_vars.yaml
+    - project/project_vars.yaml
   vars:
     - temp_folder: "/tmp/pimp_my_temp"
     - pip3_packages:
@@ -115,7 +115,7 @@
             dest: ~/.inputrc
         - name: Template project bash rc
           template:
-            src: project.bashrc
+            src: project/project.bashrc
             dest: ~/.project.bashrc
 
     - name: Template git-related files

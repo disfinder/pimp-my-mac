@@ -1,2 +1,6 @@
 project.bashrc
 project_vars.yaml
+
+# start using submodules for projects
+.gitmodules
+project/
