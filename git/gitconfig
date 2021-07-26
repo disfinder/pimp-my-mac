@@ -25,6 +25,7 @@
     ci = commit
     co = checkout
     br = branch
+    bl = "!git branch --list --color=always | egrep -v 'bak|obsolete'"
     r = reset
     cp = cherry-pick
     gr = grep -Ii
