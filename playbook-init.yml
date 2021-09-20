@@ -1,4 +1,4 @@
-#!/usr/bin/env ANSIBLE_NOCOWS=1 ansible-playbook -K
+#!/usr/bin/env ANSIBLE_NOCOWS=1 ansible-playbook
 - hosts: localhost
   connection: local
   gather_facts: no
@@ -92,7 +92,9 @@
           command: whoami
           register: raw_whoami
         - name: Ensure bash is set as user shell
-          tags: bash_shell
+          tags:
+            - bash_shell
+            - never
           become: yes
           user:
             name: "{{ raw_whoami.stdout }}"
