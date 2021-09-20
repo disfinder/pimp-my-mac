@@ -83,24 +83,28 @@
         name: "{{ brew_casks }}"
         state: present
 
-    - name: Populate bash profile
-      tags: bash
+    - name: Enforce bash shell
+      tags:
+        - bash_shell
+        - never
       block:
         - name: Understand who I am
           tags:
             - bash_shell
-            - never
           become: false
           command: whoami
           register: raw_whoami
         - name: Ensure bash is set as user shell
           tags:
             - bash_shell
-            - never
           become: yes
           user:
             name: "{{ raw_whoami.stdout }}"
             shell: /bin/bash
+
+    - name: Populate bash profile
+      tags: bash
+      block:
         # By default, macos use login shell every time
         # https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc
         # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other systems, but you can configure that in the preferences.
