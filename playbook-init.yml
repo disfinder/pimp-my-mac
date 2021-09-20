@@ -49,6 +49,9 @@
       - yq
       - diff-so-fancy
       - dty1er/tap/kubecolor
+      - bat
+      - exa
+      - lazygit
     - brew_casks:
       - vagrant
     - dmg_files:
