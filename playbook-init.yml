@@ -87,7 +87,9 @@
       tags: bash
       block:
         - name: Understand who I am
-          tags: bash_shell
+          tags:
+            - bash_shell
+            - never
           become: false
           command: whoami
           register: raw_whoami
