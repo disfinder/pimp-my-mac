@@ -6,7 +6,7 @@ To initiante request for installation, run `git` command in your terminal.
 
 Run this command in your terminal
 ```bash
-mkdir -p ~/develop/com.github.gist/disfinder/pimp_my_mac/ && cd "$_" && git clone https://gist.github.com/c407febdde166ebacf734bcd1ec268f6.git .
+mkdir -p ~/develop/com.github.gist/disfinder/pimp_my_mac/ && cd "$_" && git clone https://github.com/disfinder/pimp-my-mac.git .
 ```
 ## custom settings
 ### playbook values
