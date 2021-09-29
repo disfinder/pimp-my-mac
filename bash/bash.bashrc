@@ -86,7 +86,13 @@ alias ll='gls -lh --time-style long-iso --color'
 #grc
 source ~/opt/grc.bashrc
 # alias ll='gls -lh --time-style long-iso'
+if [ -f $(which bat) ]; then
+  alias cat='bat'
+fi
 
+if [ -f $(which exa) ]; then
+  alias ll='exa --long --all'
+fi
 
 # color man
 export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red
