@@ -187,5 +187,8 @@
   func = 146 bold
   commit = yellow bold
   old = red bold
-  new = green bold
+  new = green
   whitespace = red reverse
+[diff-so-fancy]
+    useUnicodeRuler = true
+    markEmptyLines = false
