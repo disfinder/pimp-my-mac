@@ -17,6 +17,9 @@
   trustExitCode = true
   cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
 
+[diff "ansible-vault"]
+	textconv = ansible-vault view
+	cachetextconv = false
 
 [alias]
     # basic
