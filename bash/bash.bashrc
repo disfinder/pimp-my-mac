@@ -99,6 +99,14 @@ if [ -f $(which lsd) ]; then
   alias ls='lsd'
 fi
 
+if [ -f $(which duf) ]; then
+  alias df='duf'
+fi
+
+if [ -f $(which dust) ]; then
+  alias du='dust'
+fi
+
 # color man
 export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red
 export LESS_TERMCAP_md=$(printf '\e[01;35m') # enter double-bright mode – bold, magenta

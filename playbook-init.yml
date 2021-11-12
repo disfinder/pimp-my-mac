@@ -55,6 +55,8 @@
       - exa
       - lazygit
       - lsd
+      - duf
+      - dust
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
