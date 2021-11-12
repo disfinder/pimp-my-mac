@@ -57,6 +57,7 @@
       - lsd
       - duf
       - dust
+      - rs/tap/curlie
     - brew_casks:
       - vagrant
       - font-hack-nerd-font

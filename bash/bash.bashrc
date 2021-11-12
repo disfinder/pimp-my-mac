@@ -107,6 +107,10 @@ if [ -f $(which dust) ]; then
   alias du='dust'
 fi
 
+if [ -f $(which curlie) ]; then
+  alias curl='curlie'
+fi
+
 # color man
 export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red
 export LESS_TERMCAP_md=$(printf '\e[01;35m') # enter double-bright mode – bold, magenta
