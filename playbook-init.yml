@@ -8,6 +8,8 @@
     - temp_folder: "/tmp/pimp_my_temp"
     - pip3_packages:
       - PyYAML
+    - brew_repositories:
+      - homebrew/cask-fonts
     - brew_packages:
       # - ansible # why not?
       - autojump
@@ -52,8 +54,10 @@
       - bat
       - exa
       - lazygit
+      - lsd
     - brew_casks:
       - vagrant
+      - font-hack-nerd-font
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -72,6 +76,11 @@
         need_unpack: yes
       # sourcetree
   tasks:
+    - name: Setup needed brew repositories
+      tags: brew
+      community.general.homebrew_tap:
+        name: "{{ brew_repositories }}"
+        state: present
     - name: Setup needed brew packages
       tags: brew
       homebrew:

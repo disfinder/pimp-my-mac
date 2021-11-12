@@ -94,6 +94,11 @@ if [ -f $(which exa) ]; then
   alias ll='exa --long --all'
 fi
 
+if [ -f $(which lsd) ]; then
+  alias ll='lsd --long --all'
+  alias ls='lsd'
+fi
+
 # color man
 export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red
 export LESS_TERMCAP_md=$(printf '\e[01;35m') # enter double-bright mode – bold, magenta
