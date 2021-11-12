@@ -8,6 +8,7 @@
     - temp_folder: "/tmp/pimp_my_temp"
     - pip3_packages:
       - PyYAML
+      - tldr
     - brew_repositories:
       - homebrew/cask-fonts
     - brew_packages:
@@ -93,6 +94,12 @@
       tags: brew
       homebrew_cask:
         name: "{{ brew_casks }}"
+        state: present
+
+    - name: Setup needed PIP3 packages
+      tags: pip
+      pip:
+        name: "{{ pip3_packages }}"
         state: present
 
     - name: Enforce bash shell
