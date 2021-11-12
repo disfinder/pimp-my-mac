@@ -195,3 +195,10 @@
 [diff-so-fancy]
     useUnicodeRuler = true
     markEmptyLines = false
+[color "branch"]
+    current = green bold reverse
+    local = green
+    remote = yellow
+[color "status"]
+    added = yellow
+    untracked = cyan
