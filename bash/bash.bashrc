@@ -162,5 +162,10 @@ complete -C aws_completer caws
 alias aws='aws --color on'
 
 alias kubectl="kubecolor"
+## add kubectl completion
+source <(kubectl completion bash) # does not work
+complete -o default -o nospace -F __start_kubectl k
+alias k="kubectl"
+
 
 source ~/.project.bashrc
