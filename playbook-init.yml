@@ -154,6 +154,23 @@
           template:
             src: project/project.bashrc
             dest: ~/.project.bashrc
+        - name: Ensure kubectl completion works
+          tags:
+            - bash
+            - k8s
+          block:
+            - name: Ensure completion dir is present
+              file:
+                path: /usr/local/etc/bash_completion.d
+                state: directory
+            - name: Grab "kubectl completion bash" shell output
+              command: kubectl completion bash
+              register: kubectl_completion_content
+            - name: Put kubectl completion into its file
+              blockinfile:
+                create: yes
+                path: /usr/local/etc/bash_completion.d/kubectl
+                block: "{{ kubectl_completion_content.stdout }}"
 
     - name: Template git-related files
       tags: git

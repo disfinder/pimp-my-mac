@@ -163,7 +163,7 @@ alias aws='aws --color on'
 
 alias kubectl="kubecolor"
 ## add kubectl completion
-source <(kubectl completion bash) # does not work
+# source <(kubectl completion bash) # does not work. making /usr/local/etc/bash_completion.d file instead
 complete -o default -o nospace -F __start_kubectl k
 alias k="kubectl"
 
