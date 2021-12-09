@@ -79,6 +79,8 @@
         filename: vscode.zip
         need_unpack: yes
       # sourcetree
+    - vscode_extentions:
+      - andyyaldoo.vscode-json #unescape/format json
   tasks:
     - name: Setup needed brew repositories
       tags: brew
