@@ -80,7 +80,41 @@
         need_unpack: yes
       # sourcetree
     - vscode_extentions:
+      - aaron-bond.better-comments
+      - adammaras.overtype
       - andyyaldoo.vscode-json #unescape/format json
+      - chrmarti.ssh
+      - coolbear.systemd-unit-file
+      - devmike.mikrotik-routeros-script
+      - efanzh.graphviz-preview
+      - esbenp.prettier-vscode
+      - fabiospampinato.vscode-todo-plus
+      - haaaad.ansible
+      - hashicorp.terraform
+      - hoovercj.vscode-power-mode
+      - kelvin.vscode-sshfs
+      - lamartire.git-indicators
+      - leodevbro.blockman
+      - marcostazi.vs-code-vagrantfile
+      - mrmlnc.vscode-apache
+      - mrmlnc.vscode-duplicate
+      - ms-azuretools.vscode-docker
+      - ms-kubernetes-tools.vscode-kubernetes-tools
+      - nobuhito.printcode
+      - qinjia.filenamecomplete
+      - redhat.vscode-yaml
+      - samverschueren.final-newline
+      - shanoor.vscode-nginx
+      - shardulm94.trailing-spaces
+      - stephanvs.dot
+      - timonwong.ansible-autocomplete
+      - wholroyd.jinja
+      - yzhang.markdown-all-in-one
+    - vscode_extentions_disabled:
+      - freakone.cursoruler
+      - geeebe.duplicate
+      - james-yu.latex-workshop
+
   tasks:
     - name: Setup needed brew repositories
       tags: brew
