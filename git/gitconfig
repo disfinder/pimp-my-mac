@@ -6,6 +6,7 @@
   editor = code --wait
   excludesfile = ~/.gitignore_global
   pager = diff-so-fancy | less --tabs=4 -RFX
+  quotePath = false
 
 [diff]
   tool = meld
