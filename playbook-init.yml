@@ -59,6 +59,7 @@
       - duf
       - dust
       - rs/tap/curlie
+      - weaveworks/tap/eksctl
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
