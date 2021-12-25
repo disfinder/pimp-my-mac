@@ -70,6 +70,10 @@
       - name: keepass
         url: https://github.com/keepassxreboot/keepassxc/releases/download/2.5.4/KeePassXC-2.5.4.dmg
         filename: KeePassXC-2.5.4.dmg
+      - name: Telegram
+        url: https://telegram.org/dl/desktop/mac
+        filename: telegram_latest.dmg
+      - name: teamviewer
     - applications:
       - name: iTerm
         url: https://iterm2.com/downloads/stable/iTerm2-3_3_9.zip
@@ -79,7 +83,16 @@
         url: https://go.microsoft.com/fwlink/?LinkID=620882
         filename: vscode.zip
         need_unpack: yes
-      # sourcetree
+      - name: Sourcetree
+        url: tbd
+        filename: tbd
+      - name: CheatSheet
+        url: https://www.mediaatelier.com/CheatSheet/
+        filename: tbd
+      - name: Choosy
+        url: tbd
+        filename: tbd
+      - name: https://www.macmenubar.com/dozer/
     - vscode_extentions:
       - aaron-bond.better-comments
       - adammaras.overtype
