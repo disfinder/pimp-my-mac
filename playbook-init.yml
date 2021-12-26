@@ -16,6 +16,7 @@
       - autojump
       - awscli
       - bash
+      - fzf
       - bash-completion
       - bash-git-prompt
       - ccze
