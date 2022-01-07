@@ -34,4 +34,9 @@ vault.yml diff=ansible-vault
 Once I got that sorted, this gist was very helpful in getting my vault diffii ng to work. Thanks muchly.
 
 
+# Todo
+- https://github.com/ahmetb/kubectx
+- https://github.com/ahmetb/kubectl-aliases
+- https://github.com/ahmetb/kubectx#interactive-mode
+
 
