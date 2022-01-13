@@ -1,6 +1,7 @@
 [user]
 	name = {{ git_username }}
 	email = {{ git_email }}
+  signingkey = {{ git_signing_key }}
 
 [core]
   editor = code --wait
@@ -172,6 +173,7 @@
 
 [commit]
   template = ~/.gitmessage
+  gpgsign = true
 
 [credential]
   helper = !aws codecommit credential-helper $@
