@@ -61,6 +61,7 @@
       - dust
       - rs/tap/curlie
       - weaveworks/tap/eksctl
+      - pinentry-mac
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
@@ -235,6 +236,15 @@
           dest: "~/.gitignore_global"
         - src: "git/gitmessage"
           dest: "~/.gitmessage"
+
+    - name: GPG configuration
+      tags:
+        - pgp
+        - gpg
+        - git
+      ansible.builtin.lineinfile:
+        path: ~/.gnupg/gpg-agent.conf
+        line: 'pinentry-program /usr/local/bin/pinentry-mac'
 
     - name: Create temp
       file:
