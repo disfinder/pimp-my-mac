@@ -154,8 +154,9 @@
     - name: Setup needed PIP3 packages
       tags: pip
       pip:
-        name: "{{ pip3_packages }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ pip3_packages }}"
 
     - name: Enforce bash shell
       tags:
