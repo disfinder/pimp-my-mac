@@ -5,6 +5,7 @@
   vars_files:
     - project/project_vars.yaml
   vars:
+    - current_user: "{{ lookup('env', 'USER') }}"
     - temp_folder: "/tmp/pimp_my_temp"
     - dotfiles_folder: "~/opt/dotfiles"
     - pip3_packages:
@@ -178,20 +179,13 @@
     - name: Enforce bash shell
       tags:
         - bash_shell
-        - never
       block:
-        - name: Understand who I am
+        - name: Ensure bash is set as user shell for user "{{ current_user }}"
           tags:
-            - bash_shell
-          become: false
-          command: whoami
-          register: raw_whoami
-        - name: Ensure bash is set as user shell
-          tags:
-            - bash_shell
+            - never
           become: yes
           user:
-            name: "{{ raw_whoami.stdout }}"
+            name: "{{ current_user }}"
             shell: /bin/bash
 
     - name: Populate bash profile
