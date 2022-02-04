@@ -1,9 +1,10 @@
 #!/usr/bin/env ANSIBLE_NOCOWS=1 ansible-playbook
 - hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: yes
   vars_files:
     - project/project_vars.yaml
+    - "arch/{{ansible_architecture }}.yaml"
   vars:
     - current_user: "{{ lookup('env', 'USER') }}"
     - temp_folder: "/tmp/pimp_my_temp"
@@ -227,18 +228,15 @@
             - bash
             - k8s
           block:
-            - name: Ensure completion dir is present
-              file:
-                path: /usr/local/etc/bash_completion.d
-                state: directory
             - name: Grab "kubectl completion bash" shell output
               command: kubectl completion bash
               register: kubectl_completion_content
             - name: Put kubectl completion into its file
               blockinfile:
                 create: yes
-                path: /usr/local/etc/bash_completion.d/kubectl
+                path: "{{ bash_completion_dir }}/kubectl"
                 block: "{{ kubectl_completion_content.stdout }}"
+          when: ansible_architecture=='x86_64'
 
     - name: Template git-related files
       tags: git
