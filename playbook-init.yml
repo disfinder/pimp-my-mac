@@ -138,6 +138,20 @@
       - freakone.cursoruler
       - geeebe.duplicate
       - james-yu.latex-workshop
+    - bash_dotfiles:
+        - template: bash/bash.bashrc
+          filename: "{{ dotfiles_folder }}/.bash_profile"
+          linkname: "~/.bash_profile"
+        - template: bash/grc.bashrc
+          filename: "{{ dotfiles_folder }}/grc.bashrc"
+          linkname: "~/.grc.bashrc"
+        - template: bash/inputrc.bashrc
+          filename: "{{ dotfiles_folder }}/.inputrc"
+          linkname: "~/.inputrc"
+        - template: project/project.bashrc
+          filename: "{{ dotfiles_folder }}/project.bashrc"
+          linkname: "~/.project.bashrc"
+
 
   tasks:
     - name: Create needed folders
@@ -145,6 +159,7 @@
       file:
         path: "{{ item }}"
         state: directory
+        mode: '750'
       with_items:
         - "{{ temp_folder }}"
         - "~/develop"
@@ -196,33 +211,30 @@
         # By default, macos use login shell every time
         # https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc
         # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other systems, but you can configure that in the preferences.
-        - name: Template bash_profile
+        - name: Template bash dotfiles
           template:
-            src: bash/bash.bashrc
-            dest: "~/.bash_profile"
-        # Why would we need that?
-        # TODO: remove or describe.
-        # - name: Link bashrc
-        #   file:
-        #     src: ~/.bash_profile
-        #     dest: ~/.bashrc
-        #     state: link
-        - name: Make home opt dir
+            src: "{{ item.template }}"
+            dest: "{{ item.filename }}"
+            mode: '644'
+          with_items: "{{ bash_dotfiles }}"
+
+        - name: Bash history
+          copy:
+            content: ""
+            dest: "{{ dotfiles_folder }}/.bash_history"
+            force: no
+            mode: '644'
+
+        - name: Link bash dotfiles
           file:
-            dest: ~/opt
-            state: directory
-        - name: Template GRC resource
-          template:
-            src: bash/grc.bashrc
-            dest: ~/opt/grc.bashrc
-        - name: Template inputrc resource (make ctrl-arrows work again)
-          template:
-            src: bash/inputrc.bashrc
-            dest: ~/.inputrc
-        - name: Template project bash rc
-          template:
-            src: project/project.bashrc
-            dest: ~/.project.bashrc
+            state: link
+            src: "{{ item.filename }}"
+            dest: "{{ item.linkname }}"
+          with_items:
+            - "{{ bash_dotfiles }}"
+            - filename: "{{ dotfiles_folder }}/.bash_history"
+              linkname: "~/.bash_history"
+
         - name: Ensure kubectl completion works
           tags:
             - bash
