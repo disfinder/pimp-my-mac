@@ -151,6 +151,17 @@
         - template: project/project.bashrc
           filename: "{{ dotfiles_folder }}/project.bashrc"
           linkname: "~/.project.bashrc"
+    - git_dotfiles:
+        - template: "git/gitconfig"
+          filename: "{{ dotfiles_folder }}/.gitconfig"
+          linkname: "~/.gitconfig"
+        - template: "git/gitignore_global"
+          filename: "{{ dotfiles_folder }}/.gitignore_global"
+          linkname: "~/.gitignore_global"
+        - template: "git/gitmessage"
+          filename: "{{ dotfiles_folder }}/.gitmessage"
+          linkname: "~/.gitmessage"
+
 
 
   tasks:
@@ -252,25 +263,31 @@
 
     - name: Template git-related files
       tags: git
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      with_items:
-        - src: "git/gitconfig"
-          dest: "~/.gitconfig"
-        - src: "git/gitignore_global"
-          dest: "~/.gitignore_global"
-        - src: "git/gitmessage"
-          dest: "~/.gitmessage"
+      block:
+        - name: Template git dotfiles
+          template:
+            src: "{{ item.template }}"
+            dest: "{{ item.filename }}"
+            mode: '644'
+          with_items: "{{ git_dotfiles }}"
 
-    - name: GPG configuration
-      tags:
-        - pgp
-        - gpg
-        - git
-      ansible.builtin.lineinfile:
-        path: ~/.gnupg/gpg-agent.conf
-        line: 'pinentry-program /usr/local/bin/pinentry-mac'
+        - name: Link git dotfiles
+          file:
+            state: link
+            src: "{{ item.filename }}"
+            dest: "{{ item.linkname }}"
+          with_items:
+            - "{{ git_dotfiles }}"
+            - filename: "{{ dotfiles_folder }}/.bash_history"
+              linkname: "~/.bash_history"
+
+        - name: GPG configuration
+          tags:
+            - pgp
+            - gpg
+          ansible.builtin.lineinfile:
+            path: ~/.gnupg/gpg-agent.conf
+            line: 'pinentry-program /usr/local/bin/pinentry-mac'
 
     - name: Download applications
       tags: never
