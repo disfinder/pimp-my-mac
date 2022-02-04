@@ -22,6 +22,10 @@ export HISTTIMEFORMAT="[%F %T] "
 ########################
 
 
+{% if ansible_architecture=='arm64' %}
+PATH="$PATH:/opt/homebrew/bin/"
+{% endif %}
+
 GIT_PROMPT_START="\[\033[01;33m\]\t\[\033[01;32m\] \u@\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
 GIT_PROMPT_END="\[\033[01;34m\] \n\$\[\033[00m\] "
 
@@ -84,7 +88,7 @@ alias ls='gls --color'
 alias ll='gls -lh --time-style long-iso --color'
 
 #grc
-source ~/opt/grc.bashrc
+source {{ dotfiles_folder }}/grc.bashrc
 # alias ll='gls -lh --time-style long-iso'
 if [ -f $(which bat) ]; then
   alias cat='bat'
@@ -177,8 +181,13 @@ fi
 # ---------------
 [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2> /dev/null
 
-# Key bindings
+# fzf key bindings
 # ------------
+{% if ansible_architecture=='arm64' %}
+source /opt/homebrew//Cellar/fzf/0.29.0/shell/key-bindings.bash
+{% else %}
 source "/usr/local/opt/fzf/shell/key-bindings.bash"
+{% endif %}
+
 
 source ~/.project.bashrc
