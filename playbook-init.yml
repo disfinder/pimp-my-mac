@@ -135,18 +135,21 @@
     - name: Setup needed brew repositories
       tags: brew
       community.general.homebrew_tap:
-        name: "{{ brew_repositories }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ brew_repositories }}"
     - name: Setup needed brew packages
       tags: brew
       homebrew:
-        name: "{{ brew_packages }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ brew_packages }}"
     - name: Setup needed brew casks
       tags: brew
       homebrew_cask:
-        name: "{{ brew_casks }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ brew_casks }}"
 
     - name: Setup needed PIP3 packages
       tags: pip
