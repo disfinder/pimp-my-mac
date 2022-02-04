@@ -6,6 +6,7 @@
     - project/project_vars.yaml
   vars:
     - temp_folder: "/tmp/pimp_my_temp"
+    - dotfiles_folder: "~/opt/dotfiles"
     - pip3_packages:
       - PyYAML
       - tldr
@@ -136,6 +137,18 @@
       - james-yu.latex-workshop
 
   tasks:
+    - name: Create needed folders
+      tags: folders
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ temp_folder }}"
+        - "~/develop"
+        - "~/tmp"
+        - "~/opt"
+        - "{{ dotfiles_folder }}"
+
     - name: Setup needed brew repositories
       tags: brew
       community.general.homebrew_tap:
@@ -253,11 +266,6 @@
       ansible.builtin.lineinfile:
         path: ~/.gnupg/gpg-agent.conf
         line: 'pinentry-program /usr/local/bin/pinentry-mac'
-
-    - name: Create temp
-      file:
-        path: "{{ temp_folder }}"
-        state: directory
 
     - name: Download applications
       tags: never
