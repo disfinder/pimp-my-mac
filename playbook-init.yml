@@ -12,7 +12,6 @@
     - brew_repositories:
       - homebrew/cask-fonts
     - brew_packages:
-      # - ansible # why not?
       - autojump
       - awscli
       - bash
@@ -60,11 +59,16 @@
       - duf
       - dust
       - rs/tap/curlie
-      - weaveworks/tap/eksctl
+      - eksctl
       - pinentry-mac
+      - minikube
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
+      - firefox
+      - vlc
+      - xnviewmp
+      - keepassxc
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
