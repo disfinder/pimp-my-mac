@@ -1,0 +1,5 @@
+Host *
+   AddKeysToAgent yes
+   UseKeychain yes
+
+{{ project_ssh_config | default('') }}

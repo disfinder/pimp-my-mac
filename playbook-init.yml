@@ -290,6 +290,20 @@
             path: ~/.gnupg/gpg-agent.conf
             line: 'pinentry-program /usr/local/bin/pinentry-mac'
 
+    - name: Configure ssh
+      tags:
+        - ssh_config
+      block:
+        - name: Template ssh config
+          template:
+            src: "ssh/config"
+            dest: "{{ dotfiles_folder }}/ssh/config"
+        - name: Link ssh config
+          file:
+            state: link
+            src: "{{ dotfiles_folder }}/ssh/config"
+            dest: "~/.ssh/config"
+
     - name: Download applications
       tags: never
       get_url:
