@@ -66,6 +66,7 @@
       - eksctl
       - pinentry-mac
       - minikube
+      - rsync
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
