@@ -67,6 +67,9 @@
       - pinentry-mac
       - minikube
       - rsync
+      - helm
+      - terraform
+      - yt-dlp
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
@@ -85,6 +88,9 @@
         url: https://telegram.org/dl/desktop/mac
         filename: telegram_latest.dmg
       - name: teamviewer
+      - name: VOX
+      - name: krita
+        website: https://krita.org/en/
     - applications:
       - name: iTerm
         url: https://iterm2.com/downloads/stable/iTerm2-3_3_9.zip
