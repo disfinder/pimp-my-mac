@@ -190,4 +190,13 @@ source "/usr/local/opt/fzf/shell/key-bindings.bash"
 {% endif %}
 
 
-source ~/.project.bashrc
+{% for project in projects_data -%}
+{% if project.bashrc %}
+source {{ dotfiles_folder }}/projects/{{ project.name }}/project.bashrc
+{% endif %}
+{% endfor %}
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/disfinder/.sdkman"
+[[ -s "/Users/disfinder/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/disfinder/.sdkman/bin/sdkman-init.sh"
+
