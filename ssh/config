@@ -2,4 +2,9 @@ Host *
    AddKeysToAgent yes
    UseKeychain yes
 
-{{ project_ssh_config | default('') }}
+{% for project in projects_data -%}
+# Project: {{ project.name }} ----------------
+{{ project.ssh_config_data }}
+# End project: {{ project.name }} ===========
+
+{% endfor %}
