@@ -276,6 +276,17 @@
         # By default, macos use login shell every time
         # https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc
         # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other systems, but you can configure that in the preferences.
+        - name: Template projects bash dotfiles
+          tags: debug3
+          template:
+            src: "{{ item.bashrc }}"
+            dest: "{{ dotfiles_folder }}/projects/{{ item.name }}/project.bashrc"
+            mode: '644'
+          loop: "{{ projects_data }}"
+          when: item.bashrc
+          loop_control:
+            label: "{{ item.name }}"
+
         - name: Template bash dotfiles
           template:
             src: "{{ item.template }}"
