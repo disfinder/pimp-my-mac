@@ -212,7 +212,7 @@
       find:
         paths: projects
         recurse: no
-        file_type: directory
+        file_type: any
       register: projects_folders
 
     - name: Collect projects data
