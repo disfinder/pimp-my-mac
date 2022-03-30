@@ -3,7 +3,6 @@
   connection: local
   gather_facts: yes
   vars_files:
-    - project/project_vars.yaml
     - "arch/{{ansible_architecture }}.yaml"
   vars:
     - current_user: "{{ lookup('env', 'USER') }}"
@@ -155,9 +154,6 @@
         - template: bash/inputrc.bashrc
           filename: "{{ dotfiles_folder }}/.inputrc"
           linkname: "~/.inputrc"
-        # - template: project/project.bashrc
-        #   filename: "{{ dotfiles_folder }}/project.bashrc"
-        #   linkname: "~/.project.bashrc"
     - git_dotfiles:
         - template: "git/gitconfig"
           filename: "{{ dotfiles_folder }}/.gitconfig"
