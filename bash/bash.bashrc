@@ -26,7 +26,7 @@ export HISTTIMEFORMAT="[%F %T] "
 PATH="$PATH:/opt/homebrew/bin/"
 {% endif %}
 
-GIT_PROMPT_START="\[\033[01;33m\]\t\[\033[01;32m\] \u@\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
+GIT_PROMPT_START="\[\033[01;34m\]\t\[\033[01;33m\] @\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
 GIT_PROMPT_END="\[\033[01;34m\] \n\$\[\033[00m\] "
 
  if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
