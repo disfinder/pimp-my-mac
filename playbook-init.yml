@@ -155,9 +155,9 @@
         - template: bash/inputrc.bashrc
           filename: "{{ dotfiles_folder }}/.inputrc"
           linkname: "~/.inputrc"
-        - template: project/project.bashrc
-          filename: "{{ dotfiles_folder }}/project.bashrc"
-          linkname: "~/.project.bashrc"
+        # - template: project/project.bashrc
+        #   filename: "{{ dotfiles_folder }}/project.bashrc"
+        #   linkname: "~/.project.bashrc"
     - git_dotfiles:
         - template: "git/gitconfig"
           filename: "{{ dotfiles_folder }}/.gitconfig"
@@ -210,6 +210,42 @@
         name: "{{ item }}"
         state: present
       with_items: "{{ pip3_packages }}"
+
+    - name: Collect projects folders
+      tags: always
+      find:
+        paths: projects
+        recurse: no
+        file_type: directory
+      register: projects_folders
+
+    - name: Collect projects data
+      tags: always
+      set_fact:
+          projects_data: "{{ projects_data|default([]) + [ {
+            'dir': item.path,
+            'name'  : item.path|basename,
+            'project_vars': lookup('fileglob', item.path+'/project_vars.yaml'),
+            'ssh_config': lookup('fileglob', item.path+'/ssh_config'),
+            'ssh_config_data': lookup('file', item.path+'/ssh_config', errors='ignore')| default(''),
+            'bashrc': lookup('fileglob', item.path+'/project.bashrc'),
+            }
+            ] }}"
+      loop: "{{ projects_folders.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+    - name: Register project vars
+      tags: always
+      include_vars:
+        file: "{{ item.project_vars }}"
+        name: "{{ item.name }}"
+      loop: "{{ projects_data }}"
+      loop_control:
+        label: "{{ item.project_vars }}"
+
+
+
 
     - name: Enforce bash shell
       tags:
