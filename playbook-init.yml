@@ -251,7 +251,9 @@
       loop_control:
         label: "{{ item.name }}"
     - name: Debug projects data
-      tags: never
+      tags:
+        - never
+        - debug3
       debug:
         var: projects_data
     - name: Enforce bash shell
