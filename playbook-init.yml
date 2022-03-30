@@ -244,6 +244,17 @@
       loop_control:
         label: "{{ item.project_vars }}"
 
+    - name: Create dotfiles projects folders
+      tags: folders
+      file:
+        path: "{{ dotfiles_folder }}/projects/{{ item.name }}"
+        state: directory
+        mode: '750'
+      loop: "{{ projects_data }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+
 
 
 
