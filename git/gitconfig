@@ -209,3 +209,11 @@
 [color "status"]
     added = yellow
     untracked = cyan
+
+{% for project in projects_data -%}
+{% for includeif in lookup('vars', project.name).git_includeif -%}
+[includeIf "gitdir:{{ includeif.dir }}"]
+    path = {{ includeif.path }}
+
+{% endfor %}
+{% endfor %}

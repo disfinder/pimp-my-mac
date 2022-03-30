@@ -229,6 +229,7 @@
             'ssh_config': lookup('fileglob', item.path+'/ssh_config'),
             'ssh_config_data': lookup('file', item.path+'/ssh_config', errors='ignore')| default(''),
             'bashrc': lookup('fileglob', item.path+'/project.bashrc'),
+            'gitconfig': lookup('fileglob', item.path+'/gitconfig'),
             }
             ] }}"
       loop: "{{ projects_folders.files }}"
@@ -327,6 +328,16 @@
     - name: Template git-related files
       tags: git
       block:
+        - name: Template projects git dotfiles
+          template:
+            src: "{{ item.gitconfig }}"
+            dest: "{{ dotfiles_folder }}/projects/{{ item.name }}/gitconfig"
+            mode: '644'
+          loop: "{{ projects_data }}"
+          when: item.gitconfig
+          loop_control:
+            label: "{{ item.name }}"
+
         - name: Template git dotfiles
           template:
             src: "{{ item.template }}"
