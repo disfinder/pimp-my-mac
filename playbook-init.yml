@@ -69,6 +69,11 @@
       - helm
       - terraform
       - yt-dlp
+      - jless
+      - ffmpeg
+      - glow
+      - dbeaver-community
+      - tmux
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
