@@ -360,6 +360,17 @@
           ansible.builtin.lineinfile:
             path: ~/.gnupg/gpg-agent.conf
             line: 'pinentry-program /usr/local/bin/pinentry-mac'
+          when: ansible_architecture=='x86_64'
+
+        - name: GPG configuration
+          tags:
+            - pgp
+            - gpg
+          ansible.builtin.lineinfile:
+            path: ~/.gnupg/gpg-agent.conf
+            line: 'pinentry-program /opt/homebrew/bin/pinentry-mac'
+          when: ansible_architecture=='arm64'
+
 
     - name: Configure ssh
       tags:
