@@ -247,7 +247,9 @@
         label: "{{ item.project_vars }}"
 
     - name: Create dotfiles projects folders
-      tags: folders
+      tags:
+        - folders
+        - always
       file:
         path: "{{ dotfiles_folder }}/projects/{{ item.name }}"
         state: directory
