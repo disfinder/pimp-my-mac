@@ -81,6 +81,7 @@
       - vlc
       - xnviewmp
       - keepassxc
+      - apptivate
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -199,7 +200,9 @@
         state: present
       with_items: "{{ brew_packages }}"
     - name: Setup needed brew casks
-      tags: brew
+      tags:
+        - brew
+        - brew_casks
       homebrew_cask:
         name: "{{ item }}"
         state: present
