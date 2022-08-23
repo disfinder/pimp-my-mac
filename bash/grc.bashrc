@@ -32,6 +32,7 @@ if [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
     alias lspci='colourify lspci'
     alias make='colourify make'
     alias mount='colourify mount'
+    alias mvn='colourify mvn'
     alias netstat='colourify netstat'
     alias ping='colourify ping'
     alias ps='colourify ps'
