@@ -11,6 +11,7 @@
     - pip3_packages:
       - PyYAML
       - tldr
+      # - localstack
     - brew_repositories:
       - homebrew/cask-fonts
     - brew_packages:
@@ -74,6 +75,7 @@
       - glow
       - dbeaver-community
       - tmux
+      # - copyq
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
