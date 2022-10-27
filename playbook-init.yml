@@ -325,6 +325,7 @@
         - name: Link bash dotfiles
           file:
             state: link
+            force: yes
             src: "{{ item.filename }}"
             dest: "{{ item.linkname }}"
           with_items:
@@ -370,6 +371,7 @@
         - name: Link git dotfiles
           file:
             state: link
+            force: yes
             src: "{{ item.filename }}"
             dest: "{{ item.linkname }}"
           with_items:
