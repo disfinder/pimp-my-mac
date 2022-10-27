@@ -218,7 +218,10 @@
       with_items: "{{ pip3_packages }}"
 
     - name: Collect projects folders
-      tags: always
+      tags:
+        - always
+        - projects
+        - projects_folders
       find:
         paths: projects
         recurse: no
@@ -226,7 +229,10 @@
       register: projects_folders
 
     - name: Collect projects data
-      tags: always
+      tags:
+        - always
+        - projects
+        - projects_data
       set_fact:
           projects_data: "{{ projects_data|default([]) + [ {
             'dir': item.path,
@@ -243,7 +249,10 @@
         label: "{{ item.path }}"
 
     - name: Register project vars
-      tags: always
+      tags:
+        - always
+        - projects
+        - projects_vars
       include_vars:
         file: "{{ item.project_vars }}"
         name: "{{ item.name }}"
