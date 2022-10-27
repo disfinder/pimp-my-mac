@@ -188,6 +188,7 @@
         - "~/tmp"
         - "~/opt"
         - "{{ dotfiles_folder }}"
+        - "~/Documents/pictures/screenshots" # for screenshots
 
     - name: Setup needed brew repositories
       tags: brew
@@ -406,6 +407,16 @@
             state: link
             src: "{{ dotfiles_folder }}/ssh/config"
             dest: "~/.ssh/config"
+
+    - name: Configure macos defaults
+      tags:
+        - macos_defaults
+      community.general.osx_defaults:
+        domain: com.apple.screencapture
+        key: location
+        type: string
+        value: "~/Documents/pictures/screenshots"
+        state: present
 
     - name: Download applications
       tags: never
