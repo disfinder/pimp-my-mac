@@ -175,6 +175,8 @@
 [credential]
   helper = !aws codecommit credential-helper $@
   UseHttpPath = true
+[add "interactive"]
+  useBuiltin = false
 [interactive]
   diffFilter = diff-so-fancy --patch
 [color]
