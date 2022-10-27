@@ -23,7 +23,7 @@ export HISTTIMEFORMAT="[%F %T] "
 
 
 {% if ansible_architecture=='arm64' %}
-PATH="$PATH:/opt/homebrew/bin"
+PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 {% endif %}
 
 GIT_PROMPT_START="\[\033[01;34m\]\t\[\033[01;33m\] @\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
