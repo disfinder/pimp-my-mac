@@ -65,7 +65,8 @@ fi
 
 # Add the following lines to your ~/.bash_profile:
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+    echo "Source brew bash completion"
+    source $(brew --prefix)/etc/bash_completion
   fi
 
 #You should set GROOVY_HOME:
@@ -201,5 +202,5 @@ export PATH="${PATH}:${HOME}/Library/Python/3.8/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+[[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
 
