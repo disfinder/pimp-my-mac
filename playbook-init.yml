@@ -292,6 +292,17 @@
             name: "{{ current_user }}"
             shell: /bin/bash
 
+    - name: Setup project-related brew packages
+      tags:
+        - brew
+        - brew_projects
+      homebrew:
+        name: "{{ lookup('vars', item.name).brew_packages|default([]) }}"
+        state: present
+      loop: "{{ projects_data }}"
+      loop_control:
+        label: "{{ item.name }}"
+
     - name: Populate bash profile
       tags: bash
       block:
