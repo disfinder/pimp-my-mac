@@ -177,7 +177,9 @@
 
   tasks:
     - name: Create needed folders
-      tags: folders
+      tags:
+        - always
+        - folders
       file:
         path: "{{ item }}"
         state: directory
