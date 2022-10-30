@@ -75,6 +75,7 @@
       - glow
       - dbeaver-community
       - tmux
+      - gnu-tar
       # - copyq
     - brew_casks:
       - vagrant
