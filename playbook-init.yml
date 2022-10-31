@@ -400,7 +400,7 @@
             line: 'use-agent'
             create: yes
 
-        - name: GPG configuration
+        - name: GPG configuration (x86)
           tags:
             - pgp
             - gpg
@@ -410,7 +410,7 @@
             create: yes
           when: ansible_architecture=='x86_64'
 
-        - name: GPG configuration
+        - name: GPG configuration (arm)
           tags:
             - pgp
             - gpg
