@@ -391,6 +391,15 @@
             - filename: "{{ dotfiles_folder }}/.bash_history"
               linkname: "~/.bash_history"
 
+        - name: GPG use agent
+          tags:
+            - pgp
+            - gpg
+          ansible.builtin.lineinfile:
+            path: ~/.gnupg/gpg.conf
+            line: 'use-agent'
+            create: yes
+
         - name: GPG configuration
           tags:
             - pgp
