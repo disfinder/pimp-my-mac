@@ -189,7 +189,7 @@ fi
 # fzf key bindings
 # ------------
 {% if ansible_architecture=='arm64' %}
-source /opt/homebrew//Cellar/fzf/0.29.0/shell/key-bindings.bash
+source /opt/homebrew/opt/fzf/shell/key-bindings.bash
 {% else %}
 source "/usr/local/opt/fzf/shell/key-bindings.bash"
 {% endif %}
