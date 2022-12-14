@@ -52,7 +52,6 @@
       - vagrant-completion
       - watch
       - wget
-      - youtube-dl
       - yq
       - diff-so-fancy
       - hidetatz/tap/kubecolor
@@ -69,13 +68,12 @@
       - rsync
       - helm
       - terraform
-      - yt-dlp
       - jless
       - ffmpeg
       - glow
-      - dbeaver-community
       - tmux
       - gnu-tar
+      - go
       # - copyq
     - brew_casks:
       - vagrant
