@@ -7,7 +7,7 @@ export HISTCONTROL=ignoreboth:erasedups
 # HISTSIZE=1000
 # HISTFILESIZE=20000
 shopt -s histappend
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }history -a; history -c; history -r"
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;} history -a; history -c; history -r"
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
 export HISTFILESIZE=1000000
@@ -167,10 +167,14 @@ complete -C aws_completer caws
 alias aws='aws --color on'
 
 alias kubectl="kubecolor"
+alias k="kubectl"
+alias kk="$(which kubectl)"
 ## add kubectl completion
 # source <(kubectl completion bash) # does not work. making /usr/local/etc/bash_completion.d file instead
 complete -o default -o nospace -F __start_kubectl k
-alias k="kubectl"
+complete -o default -o nospace -F __start_kubectl kk
+complete -o default -o nospace -F __start_kubectl kubecolor
+complete -o default -o nospace -F __start_kubectl kubectl
 
 # Setup fzf
 # ---------
