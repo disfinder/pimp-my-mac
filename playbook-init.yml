@@ -55,7 +55,7 @@
       - youtube-dl
       - yq
       - diff-so-fancy
-      - dty1er/tap/kubecolor
+      - hidetatz/tap/kubecolor
       - bat
       - exa
       - lazygit
