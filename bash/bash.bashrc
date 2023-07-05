@@ -166,7 +166,7 @@ caws()
 complete -C aws_completer caws
 alias aws='aws --color on'
 
-alias kubectl="kubecolor"
+alias kubectl="kubecolor" # grc has kubectl alias, but kubecolor looks better, even if has some issues
 alias k="kubectl"
 alias kk="$(which kubectl)"
 ## add kubectl completion
