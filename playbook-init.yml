@@ -75,6 +75,7 @@
       - gnu-tar
       - go
       # - copyq
+      - kubectx
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
@@ -161,6 +162,9 @@
         - template: bash/inputrc.bashrc
           filename: "{{ dotfiles_folder }}/.inputrc"
           linkname: "~/.inputrc"
+        - template: bash/colors.bashrc
+          filename: "{{ dotfiles_folder }}/colors.bashrc"
+          linkname: "~/.colors.bashrc"
     - git_dotfiles:
         - template: "git/gitconfig"
           filename: "{{ dotfiles_folder }}/.gitconfig"
