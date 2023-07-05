@@ -1,3 +1,8 @@
+# lets use grc-provided features
+GRC_ALIASES=true
+[ -f /opt/homebrew/etc/grc.sh ] && source /opt/homebrew/etc/grc.sh
+return 0
+
 GRC="$(type -p grc)"
 if [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
     alias colourify="$GRC -es --colour=auto"
