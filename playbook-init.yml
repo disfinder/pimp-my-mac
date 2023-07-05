@@ -1,18 +1,21 @@
 #!/usr/bin/env ANSIBLE_NOCOWS=1 ansible-playbook
 - hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: yes
   vars_files:
-    - project/project_vars.yaml
+    - "arch/{{ansible_architecture }}.yaml"
   vars:
+    - current_user: "{{ lookup('env', 'USER') }}"
     - temp_folder: "/tmp/pimp_my_temp"
+    - dotfiles_folder: "~/opt/dotfiles"
     - pip3_packages:
       - PyYAML
       - tldr
+      # - localstack
     - brew_repositories:
       - homebrew/cask-fonts
     - brew_packages:
-      # - ansible # why not?
+      - ansible-lint
       - autojump
       - awscli
       - bash
@@ -49,10 +52,9 @@
       - vagrant-completion
       - watch
       - wget
-      - youtube-dl
       - yq
       - diff-so-fancy
-      - dty1er/tap/kubecolor
+      - hidetatz/tap/kubecolor
       - bat
       - exa
       - lazygit
@@ -60,11 +62,27 @@
       - duf
       - dust
       - rs/tap/curlie
-      - weaveworks/tap/eksctl
+      - eksctl
       - pinentry-mac
+      - minikube
+      - rsync
+      - helm
+      - terraform
+      - jless
+      - ffmpeg
+      - glow
+      - tmux
+      - gnu-tar
+      - go
+      # - copyq
     - brew_casks:
       - vagrant
       - font-hack-nerd-font
+      - firefox
+      - vlc
+      - xnviewmp
+      - keepassxc
+      - apptivate
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
@@ -76,6 +94,9 @@
         url: https://telegram.org/dl/desktop/mac
         filename: telegram_latest.dmg
       - name: teamviewer
+      - name: VOX
+      - name: krita
+        website: https://krita.org/en/
     - applications:
       - name: iTerm
         url: https://iterm2.com/downloads/stable/iTerm2-3_3_9.zip
@@ -130,48 +151,156 @@
       - freakone.cursoruler
       - geeebe.duplicate
       - james-yu.latex-workshop
+    - bash_dotfiles:
+        - template: bash/bash.bashrc
+          filename: "{{ dotfiles_folder }}/.bash_profile"
+          linkname: "~/.bash_profile"
+        - template: bash/grc.bashrc
+          filename: "{{ dotfiles_folder }}/grc.bashrc"
+          linkname: "~/.grc.bashrc"
+        - template: bash/inputrc.bashrc
+          filename: "{{ dotfiles_folder }}/.inputrc"
+          linkname: "~/.inputrc"
+    - git_dotfiles:
+        - template: "git/gitconfig"
+          filename: "{{ dotfiles_folder }}/.gitconfig"
+          linkname: "~/.gitconfig"
+        - template: "git/gitignore_global"
+          filename: "{{ dotfiles_folder }}/.gitignore_global"
+          linkname: "~/.gitignore_global"
+        - template: "git/gitmessage"
+          filename: "{{ dotfiles_folder }}/.gitmessage"
+          linkname: "~/.gitmessage"
+
+
 
   tasks:
+    - name: Create needed folders
+      tags:
+        - always
+        - folders
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '750'
+      with_items:
+        - "{{ temp_folder }}"
+        - "~/develop"
+        - "~/tmp"
+        - "~/opt"
+        - "{{ dotfiles_folder }}"
+        - "~/Documents/pictures/screenshots" # for screenshots
+
     - name: Setup needed brew repositories
       tags: brew
       community.general.homebrew_tap:
-        name: "{{ brew_repositories }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ brew_repositories }}"
     - name: Setup needed brew packages
       tags: brew
       homebrew:
-        name: "{{ brew_packages }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ brew_packages }}"
     - name: Setup needed brew casks
-      tags: brew
+      tags:
+        - brew
+        - brew_casks
       homebrew_cask:
-        name: "{{ brew_casks }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ brew_casks }}"
 
     - name: Setup needed PIP3 packages
       tags: pip
       pip:
-        name: "{{ pip3_packages }}"
+        name: "{{ item }}"
         state: present
+      with_items: "{{ pip3_packages }}"
 
+    - name: Collect projects folders
+      tags:
+        - always
+        - projects
+        - projects_folders
+      find:
+        paths: projects
+        recurse: no
+        file_type: any
+      register: projects_folders
+
+    - name: Collect projects data
+      tags:
+        - always
+        - projects
+        - projects_data
+      set_fact:
+          projects_data: "{{ projects_data|default([]) + [ {
+            'dir': item.path,
+            'name'  : item.path|basename,
+            'project_vars': lookup('fileglob', item.path+'/project_vars.yaml'),
+            'ssh_config': lookup('fileglob', item.path+'/ssh_config'),
+            'ssh_config_data': lookup('file', item.path+'/ssh_config', errors='ignore')| default(''),
+            'bashrc': lookup('fileglob', item.path+'/project.bashrc'),
+            'gitconfig': lookup('fileglob', item.path+'/gitconfig'),
+            }
+            ] }}"
+      loop: "{{ projects_folders.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+    - name: Register project vars
+      tags:
+        - always
+        - projects
+        - projects_vars
+      include_vars:
+        file: "{{ item.project_vars }}"
+        name: "{{ item.name }}"
+      loop: "{{ projects_data }}"
+      loop_control:
+        label: "{{ item.project_vars }}"
+
+    - name: Create dotfiles projects folders
+      tags:
+        - folders
+        - always
+      file:
+        path: "{{ dotfiles_folder }}/projects/{{ item.name }}"
+        state: directory
+        mode: '750'
+      loop: "{{ projects_data }}"
+      loop_control:
+        label: "{{ item.name }}"
+    - name: Debug projects data
+      tags:
+        - never
+        - debug3
+      debug:
+        var: projects_data
     - name: Enforce bash shell
       tags:
         - bash_shell
-        - never
       block:
-        - name: Understand who I am
+        - name: Ensure bash is set as user shell for user "{{ current_user }}"
           tags:
-            - bash_shell
-          become: false
-          command: whoami
-          register: raw_whoami
-        - name: Ensure bash is set as user shell
-          tags:
-            - bash_shell
+            - never
           become: yes
           user:
-            name: "{{ raw_whoami.stdout }}"
+            name: "{{ current_user }}"
             shell: /bin/bash
+
+    - name: Setup project-related brew packages
+      tags:
+        - brew
+        - brew_projects
+      homebrew:
+        name: "{{ lookup('vars', item.name).brew_packages|default([]) }}"
+        state: present
+      loop: "{{ projects_data }}"
+      loop_control:
+        label: "{{ item.name }}"
 
     - name: Populate bash profile
       tags: bash
@@ -179,77 +308,140 @@
         # By default, macos use login shell every time
         # https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc
         # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other systems, but you can configure that in the preferences.
-        - name: Template bash_profile
+        - name: Template projects bash dotfiles
           template:
-            src: bash/bash.bashrc
-            dest: "~/.bash_profile"
-        # Why would we need that?
-        # TODO: remove or describe.
-        # - name: Link bashrc
-        #   file:
-        #     src: ~/.bash_profile
-        #     dest: ~/.bashrc
-        #     state: link
-        - name: Make home opt dir
+            src: "{{ item.bashrc }}"
+            dest: "{{ dotfiles_folder }}/projects/{{ item.name }}/project.bashrc"
+            mode: '644'
+          loop: "{{ projects_data }}"
+          when: item.bashrc
+          loop_control:
+            label: "{{ item.name }}"
+
+        - name: Template bash dotfiles
+          template:
+            src: "{{ item.template }}"
+            dest: "{{ item.filename }}"
+            mode: '644'
+          with_items: "{{ bash_dotfiles }}"
+
+        - name: Bash history
+          copy:
+            content: ""
+            dest: "{{ dotfiles_folder }}/.bash_history"
+            force: no
+            mode: '644'
+
+        - name: Link bash dotfiles
           file:
-            dest: ~/opt
-            state: directory
-        - name: Template GRC resource
-          template:
-            src: bash/grc.bashrc
-            dest: ~/opt/grc.bashrc
-        - name: Template inputrc resource (make ctrl-arrows work again)
-          template:
-            src: bash/inputrc.bashrc
-            dest: ~/.inputrc
-        - name: Template project bash rc
-          template:
-            src: project/project.bashrc
-            dest: ~/.project.bashrc
+            state: link
+            force: yes
+            src: "{{ item.filename }}"
+            dest: "{{ item.linkname }}"
+          with_items:
+            - "{{ bash_dotfiles }}"
+            - filename: "{{ dotfiles_folder }}/.bash_history"
+              linkname: "~/.bash_history"
+
         - name: Ensure kubectl completion works
           tags:
             - bash
             - k8s
           block:
-            - name: Ensure completion dir is present
-              file:
-                path: /usr/local/etc/bash_completion.d
-                state: directory
             - name: Grab "kubectl completion bash" shell output
               command: kubectl completion bash
               register: kubectl_completion_content
             - name: Put kubectl completion into its file
               blockinfile:
                 create: yes
-                path: /usr/local/etc/bash_completion.d/kubectl
+                path: "{{ bash_completion_dir }}/kubectl"
                 block: "{{ kubectl_completion_content.stdout }}"
+          when: ansible_architecture=='x86_64'
 
     - name: Template git-related files
       tags: git
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      with_items:
-        - src: "git/gitconfig"
-          dest: "~/.gitconfig"
-        - src: "git/gitignore_global"
-          dest: "~/.gitignore_global"
-        - src: "git/gitmessage"
-          dest: "~/.gitmessage"
+      block:
+        - name: Template projects git dotfiles
+          template:
+            src: "{{ item.gitconfig }}"
+            dest: "{{ dotfiles_folder }}/projects/{{ item.name }}/gitconfig"
+            mode: '644'
+          loop: "{{ projects_data }}"
+          when: item.gitconfig
+          loop_control:
+            label: "{{ item.name }}"
 
-    - name: GPG configuration
+        - name: Template git dotfiles
+          template:
+            src: "{{ item.template }}"
+            dest: "{{ item.filename }}"
+            mode: '644'
+          with_items: "{{ git_dotfiles }}"
+
+        - name: Link git dotfiles
+          file:
+            state: link
+            force: yes
+            src: "{{ item.filename }}"
+            dest: "{{ item.linkname }}"
+          with_items:
+            - "{{ git_dotfiles }}"
+            - filename: "{{ dotfiles_folder }}/.bash_history"
+              linkname: "~/.bash_history"
+
+        - name: GPG use agent
+          tags:
+            - pgp
+            - gpg
+          ansible.builtin.lineinfile:
+            path: ~/.gnupg/gpg.conf
+            line: 'use-agent'
+            create: yes
+
+        - name: GPG configuration (x86)
+          tags:
+            - pgp
+            - gpg
+          ansible.builtin.lineinfile:
+            path: ~/.gnupg/gpg-agent.conf
+            line: 'pinentry-program /usr/local/bin/pinentry-tty'
+            create: yes
+          when: ansible_architecture=='x86_64'
+
+        - name: GPG configuration (arm)
+          tags:
+            - pgp
+            - gpg
+          ansible.builtin.lineinfile:
+            path: ~/.gnupg/gpg-agent.conf
+            line: 'pinentry-program /opt/homebrew/bin/pinentry-tty'
+            create: yes
+          when: ansible_architecture=='arm64'
+
+
+    - name: Configure ssh
       tags:
-        - pgp
-        - gpg
-        - git
-      ansible.builtin.lineinfile:
-        path: ~/.gnupg/gpg-agent.conf
-        line: 'pinentry-program /usr/local/bin/pinentry-mac'
+        - ssh_config
+      block:
+        - name: Template ssh config
+          template:
+            src: "ssh/config"
+            dest: "{{ dotfiles_folder }}/ssh/config"
+        - name: Link ssh config
+          file:
+            state: link
+            src: "{{ dotfiles_folder }}/ssh/config"
+            dest: "~/.ssh/config"
 
-    - name: Create temp
-      file:
-        path: "{{ temp_folder }}"
-        state: directory
+    - name: Configure macos defaults
+      tags:
+        - macos_defaults
+      community.general.osx_defaults:
+        domain: com.apple.screencapture
+        key: location
+        type: string
+        value: "~/Documents/pictures/screenshots"
+        state: present
 
     - name: Download applications
       tags: never

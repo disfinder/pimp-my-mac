@@ -7,7 +7,7 @@ export HISTCONTROL=ignoreboth:erasedups
 # HISTSIZE=1000
 # HISTFILESIZE=20000
 shopt -s histappend
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }history -a; history -c; history -r"
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;} history -a; history -c; history -r"
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
 export HISTFILESIZE=1000000
@@ -22,7 +22,11 @@ export HISTTIMEFORMAT="[%F %T] "
 ########################
 
 
-GIT_PROMPT_START="\[\033[01;33m\]\t\[\033[01;32m\] \u@\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
+{% if ansible_architecture=='arm64' %}
+PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+{% endif %}
+
+GIT_PROMPT_START="\[\033[01;34m\]\t\[\033[01;33m\] @\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
 GIT_PROMPT_END="\[\033[01;34m\] \n\$\[\033[00m\] "
 
  if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
@@ -61,7 +65,8 @@ fi
 
 # Add the following lines to your ~/.bash_profile:
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+    echo "Source brew bash completion"
+    source $(brew --prefix)/etc/bash_completion
   fi
 
 #You should set GROOVY_HOME:
@@ -84,7 +89,7 @@ alias ls='gls --color'
 alias ll='gls -lh --time-style long-iso --color'
 
 #grc
-source ~/opt/grc.bashrc
+source {{ dotfiles_folder }}/grc.bashrc
 # alias ll='gls -lh --time-style long-iso'
 if [ -f $(which bat) ]; then
   alias cat='bat'
@@ -161,11 +166,15 @@ caws()
 complete -C aws_completer caws
 alias aws='aws --color on'
 
-alias kubectl="kubecolor"
+alias kubectl="kubecolor" # grc has kubectl alias, but kubecolor looks better, even if has some issues
+alias k="kubectl"
+alias kk="$(which kubectl)"
 ## add kubectl completion
 # source <(kubectl completion bash) # does not work. making /usr/local/etc/bash_completion.d file instead
 complete -o default -o nospace -F __start_kubectl k
-alias k="kubectl"
+complete -o default -o nospace -F __start_kubectl kk
+complete -o default -o nospace -F __start_kubectl kubecolor
+complete -o default -o nospace -F __start_kubectl kubectl
 
 # Setup fzf
 # ---------
@@ -177,8 +186,25 @@ fi
 # ---------------
 [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2> /dev/null
 
-# Key bindings
+# fzf key bindings
 # ------------
+{% if ansible_architecture=='arm64' %}
+source /opt/homebrew/opt/fzf/shell/key-bindings.bash
+{% else %}
 source "/usr/local/opt/fzf/shell/key-bindings.bash"
+{% endif %}
 
-source ~/.project.bashrc
+
+{% for project in projects_data -%}
+{% if project.bashrc %}
+source {{ dotfiles_folder }}/projects/{{ project.name }}/project.bashrc
+{% endif %}
+{% endfor %}
+
+# pip packages
+export PATH="${PATH}:${HOME}/Library/Python/3.8/bin"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
+

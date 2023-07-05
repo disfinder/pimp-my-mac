@@ -9,18 +9,20 @@ Run this command in your terminal
 mkdir -p ~/develop/com.github.gist/disfinder/pimp_my_mac/ && cd "$_" && git clone https://github.com/disfinder/pimp-my-mac.git .
 ```
 ## custom settings
-### playbook values
-Create `project_vars.yaml` - this file intentionally omitted from git (and included in .gitignore to prevent committing) - here you can put your own values.
 
-Example:
+Playbook will search for anything inside `projects` folder and process discovered data.
+Multiproject configuration support:
+- git configuration
+- bash configuration
+- variable configuration
+- ssh configuration
+
+`projects/PROJECTNAME/project_vars.yaml` must list git includedirs, if gitconfig usage is expected for the project:
 ```yaml
----
-git_username: username
-git_email: user@example.com
+git_includeif:
+  - dir:  ~/develop/com.github/PROJECTNAME/
+    path: ~/opt/dotfiles/projects/PROJECTNAME/gitconfig
 ```
-### bash values
-Put anything project-specific bash configs (variables, aliases, etc) into file `project.bashrc`. It will be templated to your home directory (as `.project.bashrc`) and sourced in bashrc.
-
 
 # Notes
 ## ansible-vault git diff

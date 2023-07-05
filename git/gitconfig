@@ -1,8 +1,3 @@
-[user]
-	name = {{ git_username }}
-	email = {{ git_email }}
-  signingkey = {{ git_signing_key }}
-
 [core]
   editor = code --wait
   excludesfile = ~/.gitignore_global
@@ -173,11 +168,15 @@
 
 [commit]
   template = ~/.gitmessage
+{% if git_signing_key is defined %}
   gpgsign = true
+{% endif %}
 
 [credential]
   helper = !aws codecommit credential-helper $@
   UseHttpPath = true
+[add "interactive"]
+  useBuiltin = false
 [interactive]
   diffFilter = diff-so-fancy --patch
 [color]
@@ -205,3 +204,11 @@
 [color "status"]
     added = yellow
     untracked = cyan
+
+{% for project in projects_data -%}
+{% for includeif in lookup('vars', project.name).git_includeif -%}
+[includeIf "gitdir:{{ includeif.dir }}"]
+    path = {{ includeif.path }}
+
+{% endfor %}
+{% endfor %}
