@@ -12,7 +12,7 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;} history -a; history -c; hist
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
 export HISTFILESIZE=1000000
 export HISTSIZE=2000000
-export HISTTIMEFORMAT="[%F %T] "
+# export HISTTIMEFORMAT="[%F %T] "
 #export HISTIGNORE="ls:ps:history"
 # Change the file location because certain bash sessions truncate .bash_history file upon close.
 # http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
