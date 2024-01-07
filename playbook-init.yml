@@ -467,3 +467,11 @@
       loop: "{{ dmg_files }}"
       loop_control:
         label: "{{ item.name }}"
+
+    - name: Configure GitHub cli
+      tags:
+        - gh
+      template:
+        src: "gh/config.yml"
+        dest: ~/.config/gh/config.yml
+        mode: '600'
