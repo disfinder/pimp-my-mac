@@ -209,6 +209,7 @@ source {{ dotfiles_folder }}/projects/{{ project.name }}/project.bashrc
 
 # pip packages
 export PATH="${PATH}:${HOME}/Library/Python/3.8/bin"
+export PATH="${PATH}:${HOME}/Library/Python/3.11/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
