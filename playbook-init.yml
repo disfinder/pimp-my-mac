@@ -22,10 +22,10 @@
       - fzf
       - bash-completion
       - bash-git-prompt
-      - ccze
+      # - ccze   # have to comment since this package is gone
       - coreutils
       - docker-completion
-      - docker-compose-completion
+      # - docker-compose-completion # gone
       - gh
       - git
       - gpg
@@ -78,7 +78,7 @@
       - kubectx
       - moreutils # sponge is needed
     - brew_casks:
-      - vagrant
+      # - vagrant # do not need vagrant anymore
       - font-hack-nerd-font
       - firefox
       - vlc
@@ -87,13 +87,12 @@
       - apptivate
       - iterm2
       - sourcetree
+      - visual-studio-code
+      - dozer
     - dmg_files:
       - name: Idea
         url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
         filename: ideaIC-2019.3.4-jbr8.dmg
-      - name: keepass
-        url: https://github.com/keepassxreboot/keepassxc/releases/download/2.5.4/KeePassXC-2.5.4.dmg
-        filename: KeePassXC-2.5.4.dmg
       - name: Telegram
         url: https://telegram.org/dl/desktop/mac
         filename: telegram_latest.dmg
@@ -102,24 +101,13 @@
       - name: krita
         website: https://krita.org/en/
     - applications:
-      - name: iTerm
-        url: https://iterm2.com/downloads/stable/iTerm2-3_3_9.zip
-        filename: iTerm2-3_3_9.zip
-        need_unpack: yes
-      - name: VSCode
-        url: https://go.microsoft.com/fwlink/?LinkID=620882
-        filename: vscode.zip
-        need_unpack: yes
-      - name: Sourcetree
-        url: tbd
-        filename: tbd
-      - name: CheatSheet
-        url: https://www.mediaatelier.com/CheatSheet/
-        filename: tbd
+      # - name: CheatSheet
+      #   url: https://www.mediaatelier.com/CheatSheet/
+      #   filename: tbd
+      # application gone, replacement needed
       - name: Choosy
-        url: tbd
+        url: https://choosy.app/
         filename: tbd
-      - name: https://www.macmenubar.com/dozer/
     - vscode_extentions:
       - aaron-bond.better-comments
       - adammaras.overtype
