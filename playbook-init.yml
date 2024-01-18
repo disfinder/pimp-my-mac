@@ -183,7 +183,10 @@
         - "~/develop"
         - "~/tmp"
         - "~/opt"
+        - "~/.config"
+        - "~/.config/gh"
         - "{{ dotfiles_folder }}"
+        - "{{ dotfiles_folder }}/ssh"
         - "~/Documents/pictures/screenshots" # for screenshots
 
     - name: Setup needed brew repositories
