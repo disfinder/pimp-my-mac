@@ -1,9 +1,11 @@
 #!/usr/bin/env ANSIBLE_NOCOWS=1 ansible-playbook
-- hosts: localhost
+
+- name: Pimp my mac
+  hosts: localhost
   connection: local
   gather_facts: yes
   vars_files:
-    - "arch/{{ansible_architecture }}.yaml"
+    - "arch/{{ ansible_architecture }}.yaml"
   vars:
     - current_user: "{{ lookup('env', 'USER') }}"
     - temp_folder: "/tmp/pimp_my_temp"
@@ -111,7 +113,7 @@
     - vscode_extentions:
       - aaron-bond.better-comments
       - adammaras.overtype
-      - andyyaldoo.vscode-json #unescape/format json
+      - andyyaldoo.vscode-json # unescape/format json
       - chrmarti.ssh
       - coolbear.systemd-unit-file
       - devmike.mikrotik-routeros-script
@@ -166,7 +168,6 @@
         - template: "git/gitmessage"
           filename: "{{ dotfiles_folder }}/.gitmessage"
           linkname: "~/.gitmessage"
-
 
 
   tasks:
@@ -305,7 +306,8 @@
       block:
         # By default, macos use login shell every time
         # https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc
-        # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other systems, but you can configure that in the preferences.
+        # On OS X, Terminal by default runs a login shell every time, so this is a little different to most other
+        # systems, but you can configure that in the preferences.
         - name: Template projects bash dotfiles
           template:
             src: "{{ item.bashrc }}"
@@ -345,6 +347,7 @@
           tags:
             - bash
             - k8s
+          when: ansible_architecture=='x86_64'
           block:
             - name: Grab "kubectl completion bash" shell output
               command: kubectl completion bash
@@ -354,7 +357,6 @@
                 create: yes
                 path: "{{ bash_completion_dir }}/kubectl"
                 block: "{{ kubectl_completion_content.stdout }}"
-          when: ansible_architecture=='x86_64'
 
     - name: Template git-related files
       tags: git
@@ -404,7 +406,7 @@
             path: ~/.gnupg/gpg-agent.conf
             line: 'pinentry-program /usr/local/bin/pinentry-tty'
             create: yes
-          when: ansible_architecture=='x86_64'
+          when: ansible_architecture == 'x86_64'
 
         - name: GPG configuration (arm)
           tags:
@@ -414,7 +416,7 @@
             path: ~/.gnupg/gpg-agent.conf
             line: 'pinentry-program /opt/homebrew/bin/pinentry-tty'
             create: yes
-          when: ansible_architecture=='arm64'
+          when: ansible_architecture == 'arm64'
 
 
     - name: Configure ssh
