@@ -1,0 +1,5 @@
+skip_list:
+    - yaml[truthy]
+    - fqcn[action]
+    - fqcn[action-core]
+    - risky-file-permissions

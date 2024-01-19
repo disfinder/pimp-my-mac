@@ -1,0 +1,5 @@
+playbook-init.yml yaml[truthy]
+playbook-init.yml yaml[indentation]
+playbook-init.yml fqcn[action]
+playbook-init.yml fqcn[action-core]
+playbook-init.yml fqcn[action-core]
