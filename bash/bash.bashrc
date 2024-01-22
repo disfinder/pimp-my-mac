@@ -31,7 +31,7 @@ source {{ dotfiles_folder }}/colors.bashrc
 # GIT_PROMPT_END="\[\033[01;34m\] \n\$\[\033[00m\] "
 GIT_PROMPT_START="${green}\t${bold_yellow}@\h${bold_blue} \w"
 get_GIT_PROMPT_END(){ # since end is dynamic (k8s-dependent), we need to update it on every prompt
-  GIT_PROMPT_END=" ${cyan}$(kubectx -c):$(kubens -c)${bold_blue}${normal}\n$ "
+  GIT_PROMPT_END=" ${cyan}[$(kubectx -c 2>/dev/null):$(kubens -c 2>/dev/null)]${bold_blue}${normal}\n$ "
 }
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;} get_GIT_PROMPT_END"
 
