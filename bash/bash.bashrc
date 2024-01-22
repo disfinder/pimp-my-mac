@@ -29,9 +29,9 @@ PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 source {{ dotfiles_folder }}/colors.bashrc
 # GIT_PROMPT_START="\[\033[01;34m\]\t\[\033[01;33m\] @\h\[\033[01;34m\] \w\[\033[01;33m\] \[\033[00m\]"
 # GIT_PROMPT_END="\[\033[01;34m\] \n\$\[\033[00m\] "
-GIT_PROMPT_START="${green}\t${bold_yellow}@\h${bold_blue} \w\[\033[00m\]"
+GIT_PROMPT_START="${green}\t${bold_yellow}@\h${bold_blue} \w"
 get_GIT_PROMPT_END(){ # since end is dynamic (k8s-dependent), we need to update it on every prompt
-  GIT_PROMPT_END=" ${cyan}$(kubectx -c):$(kubens -c)${bold_blue}\n\$\[\033[00m\] "
+  GIT_PROMPT_END=" ${cyan}$(kubectx -c):$(kubens -c)${bold_blue}${normal}\n$ "
 }
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;} get_GIT_PROMPT_END"
 
