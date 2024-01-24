@@ -195,6 +195,7 @@
       with_items: "{{ brew_repositories }}"
     - name: Setup needed brew packages
       tags: brew
+      failed_when: not ignore_brew_erorrs
       homebrew:
         name: "{{ item }}"
         state: present
@@ -203,6 +204,7 @@
       tags:
         - brew
         - brew_casks
+      failed_when: not ignore_brew_erorrs
       homebrew_cask:
         name: "{{ item }}"
         state: present
