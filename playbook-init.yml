@@ -51,7 +51,6 @@
       - pip-completion
       - pv
       - tree
-      - vagrant-completion
       - watch
       - wget
       - yq
@@ -83,9 +82,6 @@
       # - vagrant # do not need vagrant anymore
       - font-hack-nerd-font
       - firefox
-      - vlc
-      - xnviewmp
-      - keepassxc
       - apptivate
       - iterm2
       - sourcetree
