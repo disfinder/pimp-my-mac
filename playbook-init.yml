@@ -7,6 +7,7 @@
   vars_files:
     - "arch/{{ ansible_architecture }}.yaml"
   vars:
+    - ignore_brew_erorrs: yes
     - current_user: "{{ lookup('env', 'USER') }}"
     - temp_folder: "/tmp/pimp_my_temp"
     - dotfiles_folder: "~/opt/dotfiles"
@@ -286,16 +287,61 @@
             name: "{{ current_user }}"
             shell: /bin/bash
 
-    - name: Setup project-related brew packages
+    # common and project-related brew pakages/items are not combined
+    # for purpose - to split the tasks and allow to run them separately
+    - name: Manage projects brew data
       tags:
         - brew
-        - brew_projects
-      homebrew:
-        name: "{{ lookup('vars', item.name).brew_packages|default([]) }}"
-        state: present
-      loop: "{{ projects_data }}"
-      loop_control:
-        label: "{{ item.name }}"
+        - projects
+        - projects_brew
+      block:
+        - name: Gather brew repositories from all projects
+          register: combined_brew_repositories
+          debug:
+            msg: "{{ lookup('vars', item.name).brew_repositories | default([]) }}"
+          loop: "{{ projects_data }}"
+          loop_control:
+            label: "{{ item.name }}"
+
+        # while installing brew packages as a single list is a recommended behavior,
+        # it is quiet inconvenient when the list is big.
+        # we iterate over the list for purpose of visibility and feedback
+        - name: Setup project-related brew repositories
+          community.general.homebrew_tap:
+            name: "{{ item }}"
+            state: present
+          loop: "{{ (combined_brew_repositories | community.general.json_query('results[*].msg') | flatten) | unique | sort }}"
+
+        - name: Gather brew packages from all projects
+          register: combined_brew_packages
+          debug:
+            msg: "{{ lookup('vars', item.name).brew_packages | default([]) }}"
+          loop: "{{ projects_data }}"
+          loop_control:
+            label: "{{ item.name }}"
+
+        - name: Setup project-related brew packages II
+          failed_when: not ignore_brew_erorrs # do not fail
+          homebrew:
+            name: "{{ item }}"
+            state: present
+          loop: "{{ (combined_brew_packages | community.general.json_query('results[*].msg') | flatten) | unique | sort }}"
+
+        - name: Gather brew casks from all projects
+          register: combined_brew_casks
+          debug:
+            msg: "{{ lookup('vars', item.name).brew_casks | default([]) }}"
+          loop: "{{ projects_data }}"
+          loop_control:
+            label: "{{ item.name }}"
+
+        - name: Setup project-related brew brew_casks
+          failed_when: not ignore_brew_erorrs # do not fail
+          homebrew_cask:
+            name: "{{ item }}"
+            state: present
+          loop: "{{ (combined_brew_casks | community.general.json_query('results[*].msg') | flatten) | unique | sort }}"
+
 
     - name: Populate bash profile
       tags: bash
