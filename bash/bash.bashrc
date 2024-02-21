@@ -176,6 +176,12 @@ caws()
         aws --output yaml $@ | yq eval --colors
     }
 
+notify(){
+  message="${1:-Ping}"
+  title="${2:-Title}"
+  osascript -e "display notification \"${message}\" with title \"${title}\""
+}
+
 # https://stackoverflow.com/questions/56448535/bash-function-preserving-tab-completion
 complete -C aws_completer caws
 alias aws='aws --color on'
