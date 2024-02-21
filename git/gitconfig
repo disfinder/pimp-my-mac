@@ -4,6 +4,9 @@
   pager = diff-so-fancy | less --tabs=4 -RFX
   quotePath = false
 
+[init]
+  defaultBranch = main
+
 [diff]
   tool = meld
 
@@ -151,6 +154,7 @@
     rw='review'
     rbc="rebase --continue"
     rbi="!f() { git rebase -i HEAD~$1; }; f"
+    main="!git checkout $(git config --get init.defaultBranch)"
 #
 [pull]
         default = current
