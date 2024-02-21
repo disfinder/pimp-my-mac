@@ -181,6 +181,7 @@
         - "~/develop"
         - "~/tmp"
         - "~/opt"
+        - "~/opt/bin"
         - "~/.config"
         - "~/.config/gh"
         - "{{ dotfiles_folder }}"
