@@ -43,9 +43,9 @@ get_GIT_PROMPT_END(){ # since end is dynamic (k8s-dependent), we need to update 
 }
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;} get_GIT_PROMPT_END"
 
- if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
-     source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
- fi
+if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+    source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+fi
 
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
