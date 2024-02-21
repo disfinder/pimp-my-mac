@@ -12,136 +12,136 @@
     - temp_folder: "/tmp/pimp_my_temp"
     - dotfiles_folder: "~/opt/dotfiles"
     - pip3_packages:
-      - PyYAML
-      - tldr
-      # - localstack
+        - PyYAML
+        - tldr
+        # - localstack
     - brew_repositories:
-      - homebrew/cask-fonts
+        - homebrew/cask-fonts
     - brew_packages:
-      - ansible-lint
-      - autojump
-      - awscli
-      - bash
-      - fzf
-      - bash-completion
-      - bash-git-prompt
-      # - ccze   # have to comment since this package is gone
-      - coreutils
-      - docker-completion
-      # - docker-compose-completion # gone
-      - gh
-      - git
-      - gpg
-      - gradle-completion
-      - grc
-      - htop
-      - httpie
-      - jq
-      - k9s
-      - lynx
-      - maven
-      - maven-completion
-      - mc
-      - mdp
-      - micro
-      - most
-      - mtr
-      - nano
-      - ncdu
-      - nmap
-      - pip-completion
-      - pv
-      - tree
-      - watch
-      - wget
-      - yq
-      - diff-so-fancy
-      - hidetatz/tap/kubecolor
-      - bat
-      - exa
-      - lazygit
-      - lsd
-      - duf
-      - dust
-      - rs/tap/curlie
-      - eksctl
-      - pinentry-mac
-      - minikube
-      - rsync
-      - helm
-      - terraform
-      - jless
-      - ffmpeg
-      - glow
-      - tmux
-      - gnu-tar
-      - go
-      # - copyq
-      - kubectx
-      - moreutils # sponge is needed
+        - ansible-lint
+        - autojump
+        - awscli
+        - bash
+        - fzf
+        - bash-completion
+        - bash-git-prompt
+        # - ccze   # have to comment since this package is gone
+        - coreutils
+        - docker-completion
+        # - docker-compose-completion # gone
+        - gh
+        - git
+        - gpg
+        - gradle-completion
+        - grc
+        - htop
+        - httpie
+        - jq
+        - k9s
+        - lynx
+        - maven
+        - maven-completion
+        - mc
+        - mdp
+        - micro
+        - most
+        - mtr
+        - nano
+        - ncdu
+        - nmap
+        - pip-completion
+        - pv
+        - tree
+        - watch
+        - wget
+        - yq
+        - diff-so-fancy
+        - hidetatz/tap/kubecolor
+        - bat
+        - exa
+        - lazygit
+        - lsd
+        - duf
+        - dust
+        - rs/tap/curlie
+        - eksctl
+        - pinentry-mac
+        - minikube
+        - rsync
+        - helm
+        - terraform
+        - jless
+        - ffmpeg
+        - glow
+        - tmux
+        - gnu-tar
+        - go
+        # - copyq
+        - kubectx
+        - moreutils # sponge is needed
     - brew_casks:
-      # - vagrant # do not need vagrant anymore
-      - font-hack-nerd-font
-      - firefox
-      - apptivate
-      - iterm2
-      - sourcetree
-      - visual-studio-code
-      - dozer
+        # - vagrant # do not need vagrant anymore
+        - font-hack-nerd-font
+        - firefox
+        - apptivate
+        - iterm2
+        - sourcetree
+        - visual-studio-code
+        - dozer
     - dmg_files:
-      - name: Idea
-        url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
-        filename: ideaIC-2019.3.4-jbr8.dmg
-      - name: Telegram
-        url: https://telegram.org/dl/desktop/mac
-        filename: telegram_latest.dmg
-      - name: teamviewer
-      - name: VOX
-      - name: krita
-        website: https://krita.org/en/
+        - name: Idea
+          url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
+          filename: ideaIC-2019.3.4-jbr8.dmg
+        - name: Telegram
+          url: https://telegram.org/dl/desktop/mac
+          filename: telegram_latest.dmg
+        - name: teamviewer
+        - name: VOX
+        - name: krita
+          website: https://krita.org/en/
     - applications:
-      # - name: CheatSheet
-      #   url: https://www.mediaatelier.com/CheatSheet/
-      #   filename: tbd
-      # application gone, replacement needed
-      - name: Choosy
-        url: https://choosy.app/
-        filename: tbd
+        # - name: CheatSheet
+        #   url: https://www.mediaatelier.com/CheatSheet/
+        #   filename: tbd
+        # application gone, replacement needed
+        - name: Choosy
+          url: https://choosy.app/
+          filename: tbd
     - vscode_extentions:
-      - aaron-bond.better-comments
-      - adammaras.overtype
-      - andyyaldoo.vscode-json # unescape/format json
-      - chrmarti.ssh
-      - coolbear.systemd-unit-file
-      - devmike.mikrotik-routeros-script
-      - efanzh.graphviz-preview
-      - esbenp.prettier-vscode
-      - fabiospampinato.vscode-todo-plus
-      - haaaad.ansible
-      - hashicorp.terraform
-      - hoovercj.vscode-power-mode
-      - kelvin.vscode-sshfs
-      - lamartire.git-indicators
-      - leodevbro.blockman
-      - marcostazi.vs-code-vagrantfile
-      - mrmlnc.vscode-apache
-      - mrmlnc.vscode-duplicate
-      - ms-azuretools.vscode-docker
-      - ms-kubernetes-tools.vscode-kubernetes-tools
-      - nobuhito.printcode
-      - qinjia.filenamecomplete
-      - redhat.vscode-yaml
-      - samverschueren.final-newline
-      - shanoor.vscode-nginx
-      - shardulm94.trailing-spaces
-      - stephanvs.dot
-      - timonwong.ansible-autocomplete
-      - wholroyd.jinja
-      - yzhang.markdown-all-in-one
+        - aaron-bond.better-comments
+        - adammaras.overtype
+        - andyyaldoo.vscode-json # unescape/format json
+        - chrmarti.ssh
+        - coolbear.systemd-unit-file
+        - devmike.mikrotik-routeros-script
+        - efanzh.graphviz-preview
+        - esbenp.prettier-vscode
+        - fabiospampinato.vscode-todo-plus
+        - haaaad.ansible
+        - hashicorp.terraform
+        - hoovercj.vscode-power-mode
+        - kelvin.vscode-sshfs
+        - lamartire.git-indicators
+        - leodevbro.blockman
+        - marcostazi.vs-code-vagrantfile
+        - mrmlnc.vscode-apache
+        - mrmlnc.vscode-duplicate
+        - ms-azuretools.vscode-docker
+        - ms-kubernetes-tools.vscode-kubernetes-tools
+        - nobuhito.printcode
+        - qinjia.filenamecomplete
+        - redhat.vscode-yaml
+        - samverschueren.final-newline
+        - shanoor.vscode-nginx
+        - shardulm94.trailing-spaces
+        - stephanvs.dot
+        - timonwong.ansible-autocomplete
+        - wholroyd.jinja
+        - yzhang.markdown-all-in-one
     - vscode_extentions_disabled:
-      - freakone.cursoruler
-      - geeebe.duplicate
-      - james-yu.latex-workshop
+        - freakone.cursoruler
+        - geeebe.duplicate
+        - james-yu.latex-workshop
     - bash_dotfiles:
         - template: bash/bash.bashrc
           filename: "{{ dotfiles_folder }}/.bash_profile"
@@ -397,7 +397,7 @@
           tags:
             - bash
             - k8s
-          when: ansible_architecture=='x86_64'
+          when: ansible_architecture == 'x86_64'
           block:
             - name: Grab "kubectl completion bash" shell output
               command: kubectl completion bash
