@@ -299,6 +299,7 @@
         - projects_brew
       block:
         - name: Gather brew repositories from all projects
+          tags: always
           register: combined_brew_repositories
           debug:
             msg: "{{ lookup('vars', item.name).brew_repositories | default([]) }}"
@@ -316,6 +317,7 @@
           loop: "{{ (combined_brew_repositories | community.general.json_query('results[*].msg') | flatten) | unique | sort }}"
 
         - name: Gather brew packages from all projects
+          tags: always
           register: combined_brew_packages
           debug:
             msg: "{{ lookup('vars', item.name).brew_packages | default([]) }}"
@@ -324,6 +326,7 @@
             label: "{{ item.name }}"
 
         - name: Setup project-related brew packages II
+          tags: projects_brew_packages
           failed_when: not ignore_brew_erorrs # do not fail
           homebrew:
             name: "{{ item }}"
@@ -331,6 +334,7 @@
           loop: "{{ (combined_brew_packages | community.general.json_query('results[*].msg') | flatten) | unique | sort }}"
 
         - name: Gather brew casks from all projects
+          tags: always
           register: combined_brew_casks
           debug:
             msg: "{{ lookup('vars', item.name).brew_casks | default([]) }}"
@@ -339,6 +343,7 @@
             label: "{{ item.name }}"
 
         - name: Setup project-related brew brew_casks
+          tags: projects_brew_cascs
           failed_when: not ignore_brew_erorrs # do not fail
           homebrew_cask:
             name: "{{ item }}"
