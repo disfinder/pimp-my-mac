@@ -88,6 +88,7 @@
         - sourcetree
         - visual-studio-code
         - dozer
+        - jordanbaird-ice
     - dmg_files:
         - name: Idea
           url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
