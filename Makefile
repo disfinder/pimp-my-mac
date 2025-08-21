@@ -1,3 +1,4 @@
+.PHONY: git
 default: help
 help:
 	@echo "Available targets:"
@@ -33,3 +34,7 @@ ssh:
 debug:
 	./playbook-init.yml --list-tags
 	@bash -l -i -c 'notify "debug is done" "pimp-my-mac"'
+
+git:
+	./playbook-init.yml --tags git
+	@bash -l -i -c 'notify "git is done" "pimp-my-mac"'
