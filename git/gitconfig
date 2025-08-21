@@ -28,6 +28,7 @@
     cl = clone
     ci = commit
     co = checkout
+    cod = "!git checkout $(git config --get init.defaultBranch)"
     br = branch
     bl = "!git branch --list --color=always | egrep -v 'bak|obsolete'"
     r = reset
@@ -51,6 +52,8 @@
     amend = commit --amend
     caa = commit -a --amend -C HEAD
     can = commit --amend --no-edit
+    # push
+    fp = push
     #
     # log commands
     # ls author committer
@@ -154,6 +157,7 @@
     rw='review'
     rbc="rebase --continue"
     rbi="!f() { git rebase -i HEAD~$1; }; f"
+    rbd="!git rebase -i $(git config --get init.defaultBranch)"
     main="!git checkout $(git config --get init.defaultBranch)"
 #
 [pull]
