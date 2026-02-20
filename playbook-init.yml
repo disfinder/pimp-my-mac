@@ -485,3 +485,19 @@
         src: "gh/config.yml"
         dest: ~/.config/gh/config.yml
         mode: '600'
+
+    - name: Manage VSCode extensions
+      # Requires VSCode to already be installed (brew_casks runs first under the brew tag).
+      # `ignore_errors` is needed because `code` exits non-zero for already-installed
+      # or already-absent extensions, which would otherwise abort the play.
+      tags: vscode_extentions
+      block:
+        - name: Install enabled VSCode extensions
+          command: "code --install-extension {{ item }}"
+          loop: "{{ vscode_extentions }}"
+          ignore_errors: yes
+
+        - name: Uninstall disabled VSCode extensions
+          command: "code --uninstall-extension {{ item }}"
+          loop: "{{ vscode_extentions_disabled }}"
+          ignore_errors: yes
