@@ -7,7 +7,9 @@
   vars_files:
     - "arch/{{ ansible_architecture }}.yaml"
   vars:
-    - ignore_brew_erorrs: yes
+    # Set to `yes` so brew tasks do not abort the run for already-installed packages;
+    # brew exits non-zero in that case, which would otherwise be treated as a failure.
+    - ignore_brew_errors: yes
     - current_user: "{{ lookup('env', 'USER') }}"
     - temp_folder: "/tmp/pimp_my_temp"
     - dotfiles_folder: "~/opt/dotfiles"
@@ -197,7 +199,7 @@
       with_items: "{{ brew_repositories }}"
     - name: Setup needed brew packages
       tags: brew
-      failed_when: not ignore_brew_erorrs
+      failed_when: not ignore_brew_errors
       homebrew:
         name: "{{ item }}"
         state: present
@@ -206,7 +208,7 @@
       tags:
         - brew
         - brew_casks
-      failed_when: not ignore_brew_erorrs
+      failed_when: not ignore_brew_errors
       homebrew_cask:
         name: "{{ item }}"
         state: present
@@ -328,7 +330,7 @@
 
         - name: Setup project-related brew packages II
           tags: projects_brew_packages
-          failed_when: not ignore_brew_erorrs # do not fail
+          failed_when: not ignore_brew_errors # do not fail
           homebrew:
             name: "{{ item }}"
             state: present
@@ -344,8 +346,8 @@
             label: "{{ item.name }}"
 
         - name: Setup project-related brew brew_casks
-          tags: projects_brew_cascs
-          failed_when: not ignore_brew_erorrs # do not fail
+          tags: projects_brew_casks
+          failed_when: not ignore_brew_errors # do not fail
           homebrew_cask:
             name: "{{ item }}"
             state: present
