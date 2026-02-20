@@ -1,12 +1,18 @@
-.PHONY: git
+.PHONY: all bash brew projects_brew ssh git screenshots vscode_extentions debug help
+
 default: help
+
 help:
 	@echo "Available targets:"
-	@echo "  make screenshots:   configure screenshots folder"
-	@echo "  make brew: 	     install all brew repositories, packages, casks"
-	@echo "  make projects_brew: install only projects-based brew repos, packages, casks"
-
-.PHONY: screenshots brew projects_brew ssh bash debug
+	@echo "  make all               run the full playbook"
+	@echo "  make bash              configure bash environment (dotfiles, symlinks)"
+	@echo "  make brew              install all brew repositories, packages, and casks"
+	@echo "  make projects_brew     install project-specific brew repos, packages, and casks"
+	@echo "  make ssh               configure SSH (~/.ssh/config)"
+	@echo "  make git               configure git dotfiles"
+	@echo "  make screenshots       set macOS screenshot save folder"
+	@echo "  make vscode_extentions install/uninstall VSCode extensions"
+	@echo "  make debug             list all available playbook tags"
 
 all:
 	./playbook-init.yml
@@ -15,9 +21,6 @@ all:
 bash:
 	./playbook-init.yml --tags bash
 	@bash -l -i -c 'notify "bash is done" "pimp-my-mac"'
-
-screenshots:
-	./playbook-init.yml --tags macos_defaults --skip-tags always
 
 brew:
 	./playbook-init.yml --tags brew
@@ -31,10 +34,17 @@ ssh:
 	./playbook-init.yml --tags ssh_config
 	@bash -l -i -c 'notify "SSH config is done" "pimp-my-mac"'
 
-debug:
-	./playbook-init.yml --list-tags
-	@bash -l -i -c 'notify "debug is done" "pimp-my-mac"'
-
 git:
 	./playbook-init.yml --tags git
 	@bash -l -i -c 'notify "git is done" "pimp-my-mac"'
+
+screenshots:
+	./playbook-init.yml --tags macos_defaults --skip-tags always
+
+vscode_extentions:
+	./playbook-init.yml --tags vscode_extentions
+	@bash -l -i -c 'notify "VSCode extensions done" "pimp-my-mac"'
+
+debug:
+	./playbook-init.yml --list-tags
+	@bash -l -i -c 'notify "debug is done" "pimp-my-mac"'
