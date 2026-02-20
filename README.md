@@ -16,26 +16,56 @@ Run this command in your terminal
 mkdir -p ~/develop/com.github/disfinder/pimp-my-mac/ && cd "$_" && git clone https://github.com/disfinder/pimp-my-mac.git .
 ```
 
-### custom settings
+### Custom settings — the projects/ pattern
 
-Playbook will search for anything inside `projects` folder and process discovered data.
-Multiproject configuration support:
+The `projects/` directory lets you maintain per-context configuration alongside the
+main playbook without forking it. Each subdirectory of `projects/` is a **project**.
 
-- git configuration
-- bash configuration
-- variable configuration
-- ssh configuration
+The playbook discovers projects automatically — no registration required. Just create
+a directory and populate whichever files you need.
 
-`projects/PROJECTNAME/project_vars.yaml` must list git includedirs, if gitconfig usage is expected for the project:
+#### Files a project can provide
+
+| File                | Purpose                                                                      |
+| ------------------- | ---------------------------------------------------------------------------- |
+| `project_vars.yaml` | Variables: brew packages, brew casks, brew repositories, git includeif paths |
+| `gitconfig`         | Git identity and settings for this project's directories                     |
+| `project.bashrc`    | Shell customisations sourced after the main bash profile                     |
+| `ssh_config`        | SSH host entries merged into `~/.ssh/config`                                 |
+
+All files are optional. A project with only `project_vars.yaml` is valid.
+
+#### `project_vars.yaml` schema
 
 ```yaml
+# Routes git identity to specific working directories.
+# The trailing / on dir: values is required by git's includeIf directive.
 git_includeif:
   - dir:  ~/develop/com.github/PROJECTNAME/
     path: ~/opt/dotfiles/projects/PROJECTNAME/gitconfig
+
+# Optional brew additions — merged with all other projects before installation.
+brew_repositories: []
+brew_packages:
+  - some-tool
+brew_casks:
+  - some-app
+```
+
+#### Minimal example
+
+```
+projects/
+└── mywork/
+    ├── project_vars.yaml   # sets git_includeif + brew_packages
+    ├── gitconfig           # name/email for work commits
+    ├── project.bashrc      # work-specific aliases
+    └── ssh_config          # SSH hosts for work servers
 ```
 
 > [!WARNING]
-> `/` at the path's end is crucial for `dir:` value.
+> The trailing `/` on every `dir:` value under `git_includeif` is required.
+> Without it git's `includeIf` will not activate for that directory.
 
 ## Notes
 
