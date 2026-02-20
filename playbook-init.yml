@@ -9,146 +9,146 @@
   vars:
     # Set to `yes` so brew tasks do not abort the run for already-installed packages;
     # brew exits non-zero in that case, which would otherwise be treated as a failure.
-    - ignore_brew_errors: yes
-    - current_user: "{{ lookup('env', 'USER') }}"
-    - temp_folder: "/tmp/pimp_my_temp"
-    - dotfiles_folder: "~/opt/dotfiles"
-    - pip3_packages:
-        - PyYAML
-        - tldr
-        # - localstack
-    - brew_repositories:
-        - homebrew/cask-fonts
-    - brew_packages:
-        - ansible-lint
-        - autojump
-        - awscli
-        - bash
-        - fzf
-        - bash-completion
-        - bash-git-prompt
-        # - ccze   # have to comment since this package is gone
-        - coreutils
-        - docker-completion
-        # - docker-compose-completion # gone
-        - gh
-        - git
-        - gpg
-        - gradle-completion
-        - grc
-        - htop
-        - httpie
-        - jq
-        - k9s
-        - lynx
-        - maven
-        - maven-completion
-        - mc
-        - mdp
-        - micro
-        - most
-        - mtr
-        - nano
-        - ncdu
-        - nmap
-        - pip-completion
-        - pv
-        - tree
-        - watch
-        - wget
-        - yq
-        - diff-so-fancy
-        - hidetatz/tap/kubecolor
-        - bat
-        - exa
-        - lazygit
-        - lsd
-        - duf
-        - dust
-        - rs/tap/curlie
-        - eksctl
-        - pinentry-mac
-        - minikube
-        - rsync
-        - helm
-        - terraform
-        - jless
-        - ffmpeg
-        - glow
-        - tmux
-        - gnu-tar
-        - go
-        # - copyq
-        - kubectx
-        - moreutils # sponge is needed
-    - brew_casks:
-        # - vagrant # do not need vagrant anymore
-        - font-hack-nerd-font
-        - firefox
-        - apptivate
-        - iterm2
-        - sourcetree
-        - visual-studio-code
-        - dozer
-        - jordanbaird-ice
-    - vscode_extensions:
-        - aaron-bond.better-comments
-        - adammaras.overtype
-        - andyyaldoo.vscode-json # unescape/format json
-        - chrmarti.ssh
-        - coolbear.systemd-unit-file
-        - devmike.mikrotik-routeros-script
-        - efanzh.graphviz-preview
-        - esbenp.prettier-vscode
-        - fabiospampinato.vscode-todo-plus
-        - haaaad.ansible
-        - hashicorp.terraform
-        - hoovercj.vscode-power-mode
-        - kelvin.vscode-sshfs
-        - lamartire.git-indicators
-        - leodevbro.blockman
-        - marcostazi.vs-code-vagrantfile
-        - mrmlnc.vscode-apache
-        - mrmlnc.vscode-duplicate
-        - ms-azuretools.vscode-docker
-        - ms-kubernetes-tools.vscode-kubernetes-tools
-        - nobuhito.printcode
-        - qinjia.filenamecomplete
-        - redhat.vscode-yaml
-        - samverschueren.final-newline
-        - shanoor.vscode-nginx
-        - shardulm94.trailing-spaces
-        - stephanvs.dot
-        - timonwong.ansible-autocomplete
-        - wholroyd.jinja
-        - yzhang.markdown-all-in-one
-    - vscode_extensions_disabled:
-        - freakone.cursoruler
-        - geeebe.duplicate
-        - james-yu.latex-workshop
-    - bash_dotfiles:
-        - template: bash/bash.bashrc
-          filename: "{{ dotfiles_folder }}/.bash_profile"
-          linkname: "~/.bash_profile"
-        - template: bash/grc.bashrc
-          filename: "{{ dotfiles_folder }}/grc.bashrc"
-          linkname: "~/.grc.bashrc"
-        - template: bash/inputrc.bashrc
-          filename: "{{ dotfiles_folder }}/.inputrc"
-          linkname: "~/.inputrc"
-        - template: bash/colors.bashrc
-          filename: "{{ dotfiles_folder }}/colors.bashrc"
-          linkname: "~/.colors.bashrc"
-    - git_dotfiles:
-        - template: "git/gitconfig"
-          filename: "{{ dotfiles_folder }}/.gitconfig"
-          linkname: "~/.gitconfig"
-        - template: "git/gitignore_global"
-          filename: "{{ dotfiles_folder }}/.gitignore_global"
-          linkname: "~/.gitignore_global"
-        - template: "git/gitmessage"
-          filename: "{{ dotfiles_folder }}/.gitmessage"
-          linkname: "~/.gitmessage"
+    ignore_brew_errors: yes
+    current_user: "{{ lookup('env', 'USER') }}"
+    temp_folder: "/tmp/pimp_my_temp"
+    dotfiles_folder: "~/opt/dotfiles"
+    pip3_packages:
+      - PyYAML
+      - tldr
+      # - localstack
+    brew_repositories:
+      - homebrew/cask-fonts
+    brew_packages:
+      - ansible-lint
+      - autojump
+      - awscli
+      - bash
+      - fzf
+      - bash-completion
+      - bash-git-prompt
+      # - ccze   # have to comment since this package is gone
+      - coreutils
+      - docker-completion
+      # - docker-compose-completion # gone
+      - gh
+      - git
+      - gpg
+      - gradle-completion
+      - grc
+      - htop
+      - httpie
+      - jq
+      - k9s
+      - lynx
+      - maven
+      - maven-completion
+      - mc
+      - mdp
+      - micro
+      - most
+      - mtr
+      - nano
+      - ncdu
+      - nmap
+      - pip-completion
+      - pv
+      - tree
+      - watch
+      - wget
+      - yq
+      - diff-so-fancy
+      - hidetatz/tap/kubecolor
+      - bat
+      - exa
+      - lazygit
+      - lsd
+      - duf
+      - dust
+      - rs/tap/curlie
+      - eksctl
+      - pinentry-mac
+      - minikube
+      - rsync
+      - helm
+      - terraform
+      - jless
+      - ffmpeg
+      - glow
+      - tmux
+      - gnu-tar
+      - go
+      # - copyq
+      - kubectx
+      - moreutils # sponge is needed
+    brew_casks:
+      # - vagrant # do not need vagrant anymore
+      - font-hack-nerd-font
+      - firefox
+      - apptivate
+      - iterm2
+      - sourcetree
+      - visual-studio-code
+      - dozer
+      - jordanbaird-ice
+    vscode_extensions:
+      - aaron-bond.better-comments
+      - adammaras.overtype
+      - andyyaldoo.vscode-json # unescape/format json
+      - chrmarti.ssh
+      - coolbear.systemd-unit-file
+      - devmike.mikrotik-routeros-script
+      - efanzh.graphviz-preview
+      - esbenp.prettier-vscode
+      - fabiospampinato.vscode-todo-plus
+      - haaaad.ansible
+      - hashicorp.terraform
+      - hoovercj.vscode-power-mode
+      - kelvin.vscode-sshfs
+      - lamartire.git-indicators
+      - leodevbro.blockman
+      - marcostazi.vs-code-vagrantfile
+      - mrmlnc.vscode-apache
+      - mrmlnc.vscode-duplicate
+      - ms-azuretools.vscode-docker
+      - ms-kubernetes-tools.vscode-kubernetes-tools
+      - nobuhito.printcode
+      - qinjia.filenamecomplete
+      - redhat.vscode-yaml
+      - samverschueren.final-newline
+      - shanoor.vscode-nginx
+      - shardulm94.trailing-spaces
+      - stephanvs.dot
+      - timonwong.ansible-autocomplete
+      - wholroyd.jinja
+      - yzhang.markdown-all-in-one
+    vscode_extensions_disabled:
+      - freakone.cursoruler
+      - geeebe.duplicate
+      - james-yu.latex-workshop
+    bash_dotfiles:
+      - template: bash/bash.bashrc
+        filename: "{{ dotfiles_folder }}/.bash_profile"
+        linkname: "~/.bash_profile"
+      - template: bash/grc.bashrc
+        filename: "{{ dotfiles_folder }}/grc.bashrc"
+        linkname: "~/.grc.bashrc"
+      - template: bash/inputrc.bashrc
+        filename: "{{ dotfiles_folder }}/.inputrc"
+        linkname: "~/.inputrc"
+      - template: bash/colors.bashrc
+        filename: "{{ dotfiles_folder }}/colors.bashrc"
+        linkname: "~/.colors.bashrc"
+    git_dotfiles:
+      - template: "git/gitconfig"
+        filename: "{{ dotfiles_folder }}/.gitconfig"
+        linkname: "~/.gitconfig"
+      - template: "git/gitignore_global"
+        filename: "{{ dotfiles_folder }}/.gitignore_global"
+        linkname: "~/.gitignore_global"
+      - template: "git/gitmessage"
+        filename: "{{ dotfiles_folder }}/.gitmessage"
+        linkname: "~/.gitmessage"
 
 
   tasks:
@@ -396,6 +396,7 @@
             - name: Grab "kubectl completion bash" shell output
               command: kubectl completion bash
               register: kubectl_completion_content
+              changed_when: false
             - name: Put kubectl completion into its file
               blockinfile:
                 create: yes
@@ -505,9 +506,13 @@
         - name: Install enabled VSCode extensions
           command: "code --install-extension {{ item }}"
           loop: "{{ vscode_extensions }}"
-          ignore_errors: yes
+          register: vscode_install_result
+          failed_when: false
+          changed_when: vscode_install_result.rc == 0
 
         - name: Uninstall disabled VSCode extensions
           command: "code --uninstall-extension {{ item }}"
           loop: "{{ vscode_extensions_disabled }}"
-          ignore_errors: yes
+          register: vscode_uninstall_result
+          failed_when: false
+          changed_when: vscode_uninstall_result.rc == 0
