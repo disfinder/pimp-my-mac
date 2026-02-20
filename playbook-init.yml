@@ -1,15 +1,15 @@
 #!/usr/bin/env ANSIBLE_NOCOWS=1 ansible-playbook
-
+---
 - name: Pimp my mac
   hosts: localhost
   connection: local
-  gather_facts: yes
+  gather_facts: true
   vars_files:
     - "arch/{{ ansible_architecture }}.yaml"
   vars:
     # Set to `yes` so brew tasks do not abort the run for already-installed packages;
     # brew exits non-zero in that case, which would otherwise be treated as a failure.
-    ignore_brew_errors: yes
+    ignore_brew_errors: true
     current_user: "{{ lookup('env', 'USER') }}"
     temp_folder: "/tmp/pimp_my_temp"
     dotfiles_folder: "~/opt/dotfiles"
@@ -150,7 +150,6 @@
         filename: "{{ dotfiles_folder }}/.gitmessage"
         linkname: "~/.gitmessage"
 
-
   tasks:
     - name: Create needed folders
       tags:
@@ -159,7 +158,7 @@
       file:
         path: "{{ item }}"
         state: directory
-        mode: '750'
+        mode: "750"
       with_items:
         - "{{ temp_folder }}"
         - "~/develop"
@@ -217,7 +216,7 @@
         - projects_folders
       find:
         paths: projects
-        recurse: no
+        recurse: false
         file_type: any
       register: projects_folders
 
@@ -260,7 +259,7 @@
       file:
         path: "{{ dotfiles_folder }}/projects/{{ item.name }}"
         state: directory
-        mode: '750'
+        mode: "750"
       loop: "{{ projects_data }}"
       loop_control:
         label: "{{ item.name }}"
@@ -279,7 +278,7 @@
         - name: Ensure bash is set as user shell for user "{{ current_user }}"
           tags:
             - never
-          become: yes
+          become: true
           user:
             name: "{{ current_user }}"
             shell: /bin/bash
@@ -344,7 +343,6 @@
             state: present
           loop: "{{ (combined_brew_casks | community.general.json_query('results[*].msg') | flatten) | unique | sort }}"
 
-
     - name: Populate bash profile
       tags: bash
       block:
@@ -356,7 +354,7 @@
           template:
             src: "{{ item.bashrc }}"
             dest: "{{ dotfiles_folder }}/projects/{{ item.name }}/project.bashrc"
-            mode: '644'
+            mode: "644"
           loop: "{{ projects_data }}"
           when: item.bashrc
           loop_control:
@@ -366,20 +364,20 @@
           template:
             src: "{{ item.template }}"
             dest: "{{ item.filename }}"
-            mode: '644'
+            mode: "644"
           with_items: "{{ bash_dotfiles }}"
 
         - name: Bash history
           copy:
             content: ""
             dest: "{{ dotfiles_folder }}/.bash_history"
-            force: no
-            mode: '644'
+            force: false
+            mode: "644"
 
         - name: Link bash dotfiles
           file:
             state: link
-            force: yes
+            force: true
             src: "{{ item.filename }}"
             dest: "{{ item.linkname }}"
           with_items:
@@ -399,7 +397,7 @@
               changed_when: false
             - name: Put kubectl completion into its file
               blockinfile:
-                create: yes
+                create: true
                 path: "{{ bash_completion_dir }}/kubectl"
                 block: "{{ kubectl_completion_content.stdout }}"
 
@@ -410,7 +408,7 @@
           template:
             src: "{{ item.gitconfig }}"
             dest: "{{ dotfiles_folder }}/projects/{{ item.name }}/gitconfig"
-            mode: '644'
+            mode: "644"
           loop: "{{ projects_data }}"
           when: item.gitconfig
           loop_control:
@@ -420,13 +418,13 @@
           template:
             src: "{{ item.template }}"
             dest: "{{ item.filename }}"
-            mode: '644'
+            mode: "644"
           with_items: "{{ git_dotfiles }}"
 
         - name: Link git dotfiles
           file:
             state: link
-            force: yes
+            force: true
             src: "{{ item.filename }}"
             dest: "{{ item.linkname }}"
           with_items:
@@ -440,8 +438,8 @@
             - gpg
           ansible.builtin.lineinfile:
             path: ~/.gnupg/gpg.conf
-            line: 'use-agent'
-            create: yes
+            line: "use-agent"
+            create: true
 
         - name: GPG configuration (x86)
           tags:
@@ -449,8 +447,8 @@
             - gpg
           ansible.builtin.lineinfile:
             path: ~/.gnupg/gpg-agent.conf
-            line: 'pinentry-program /usr/local/bin/pinentry-tty'
-            create: yes
+            line: "pinentry-program /usr/local/bin/pinentry-tty"
+            create: true
           when: ansible_architecture == 'x86_64'
 
         - name: GPG configuration (arm)
@@ -459,10 +457,9 @@
             - gpg
           ansible.builtin.lineinfile:
             path: ~/.gnupg/gpg-agent.conf
-            line: 'pinentry-program /opt/homebrew/bin/pinentry-tty'
-            create: yes
+            line: "pinentry-program /opt/homebrew/bin/pinentry-tty"
+            create: true
           when: ansible_architecture == 'arm64'
-
 
     - name: Configure ssh
       tags:
@@ -488,14 +485,13 @@
         value: "~/Documents/pictures/screenshots"
         state: present
 
-
     - name: Configure GitHub cli
       tags:
         - gh
       template:
         src: "gh/config.yml"
         dest: ~/.config/gh/config.yml
-        mode: '600'
+        mode: "600"
 
     - name: Manage VSCode extensions
       # Requires VSCode to already be installed (brew_casks runs first under the brew tag).
