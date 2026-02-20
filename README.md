@@ -1,6 +1,6 @@
 # Pimp my Mac
 
-Ansible playbook for consistent yet flexible congfiguration of your Mac machines.
+Ansible playbook for consistent yet flexible configuration of your Mac machines.
 
 ## Prerequisites
 
