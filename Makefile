@@ -1,4 +1,4 @@
-.PHONY: all bash brew projects_brew ssh git screenshots vscode_extentions debug help
+.PHONY: all bash brew projects_brew ssh git screenshots vscode_extensions debug help
 
 default: help
 
@@ -11,7 +11,7 @@ help:
 	@echo "  make ssh               configure SSH (~/.ssh/config)"
 	@echo "  make git               configure git dotfiles"
 	@echo "  make screenshots       set macOS screenshot save folder"
-	@echo "  make vscode_extentions install/uninstall VSCode extensions"
+	@echo "  make vscode_extensions install/uninstall VSCode extensions"
 	@echo "  make debug             list all available playbook tags"
 
 all:
@@ -42,8 +42,8 @@ screenshots:
 	# --skip-tags always suppresses project-discovery overhead for this lightweight one-shot target
 	./playbook-init.yml --tags macos_defaults --skip-tags always
 
-vscode_extentions:
-	./playbook-init.yml --tags vscode_extentions
+vscode_extensions:
+	./playbook-init.yml --tags vscode_extensions
 	@bash -l -i -c 'notify "VSCode extensions done" "pimp-my-mac"'
 
 debug:
