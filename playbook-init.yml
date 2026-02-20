@@ -91,25 +91,6 @@
         - visual-studio-code
         - dozer
         - jordanbaird-ice
-    - dmg_files:
-        - name: Idea
-          url: https://download.jetbrains.com/idea/ideaIC-2019.3.4-jbr8.dmg
-          filename: ideaIC-2019.3.4-jbr8.dmg
-        - name: Telegram
-          url: https://telegram.org/dl/desktop/mac
-          filename: telegram_latest.dmg
-        - name: teamviewer
-        - name: VOX
-        - name: krita
-          website: https://krita.org/en/
-    - applications:
-        # - name: CheatSheet
-        #   url: https://www.mediaatelier.com/CheatSheet/
-        #   filename: tbd
-        # application gone, replacement needed
-        - name: Choosy
-          url: https://choosy.app/
-          filename: tbd
     - vscode_extentions:
         - aaron-bond.better-comments
         - adammaras.overtype
@@ -496,23 +477,6 @@
         value: "~/Documents/pictures/screenshots"
         state: present
 
-    - name: Download applications
-      tags: never
-      get_url:
-        url: "{{ item.url }}"
-        dest: "{{ temp_folder }}/{{ item.filename }}"
-      loop: "{{ applications }}"
-      loop_control:
-        label: "{{ item.name }}"
-
-    - name: Download dmg_files
-      tags: never
-      get_url:
-        url: "{{ item.url }}"
-        dest: "{{ temp_folder }}/{{ item.filename }}"
-      loop: "{{ dmg_files }}"
-      loop_control:
-        label: "{{ item.name }}"
 
     - name: Configure GitHub cli
       tags:
