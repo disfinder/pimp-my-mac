@@ -39,6 +39,7 @@ git:
 	@bash -l -i -c 'notify "git is done" "pimp-my-mac"'
 
 screenshots:
+	# --skip-tags always suppresses project-discovery overhead for this lightweight one-shot target
 	./playbook-init.yml --tags macos_defaults --skip-tags always
 
 vscode_extentions:
