@@ -202,6 +202,14 @@
         state: present
       with_items: "{{ pip3_packages }}"
 
+    # --- Project discovery ---
+    # Projects are self-contained directories under projects/.
+    # Each project can provide: project_vars.yaml, gitconfig, project.bashrc, ssh_config.
+    # The three tasks below wire them up:
+    #   1. find discovers project directories.
+    #   2. set_fact builds a list of dicts with per-project file paths.
+    #   3. include_vars loads each project_vars.yaml into a namespaced variable.
+    # Downstream tasks then look up those vars by project name.
     - name: Collect projects folders
       tags:
         - always
@@ -256,6 +264,8 @@
       loop: "{{ projects_data }}"
       loop_control:
         label: "{{ item.name }}"
+    # Tasks tagged `never` are opt-in and do not run during a normal play.
+    # To invoke them explicitly: ./playbook-init.yml --tags debug3
     - name: Debug projects data
       tags:
         - never
