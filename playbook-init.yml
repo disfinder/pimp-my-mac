@@ -91,6 +91,7 @@
       - visual-studio-code
       - dozer
       - jordanbaird-ice
+      - go-task/tap/go-task
     vscode_extensions:
       - aaron-bond.better-comments
       - adammaras.overtype
@@ -460,6 +461,22 @@
             line: "pinentry-program /opt/homebrew/bin/pinentry-tty"
             create: true
           when: ansible_architecture == 'arm64'
+
+    - name: Configure global Taskfile
+      tags:
+        - taskfile
+      block:
+        - name: Copy global Taskfile to dotfiles
+          copy:
+            src: task/Taskfile.yaml
+            dest: "{{ dotfiles_folder }}/Taskfile.yaml"
+            mode: "644"
+        - name: Link global Taskfile to home
+          file:
+            state: link
+            force: true
+            src: "{{ dotfiles_folder }}/Taskfile.yaml"
+            dest: "~/Taskfile.yaml"
 
     - name: Configure ssh
       tags:
