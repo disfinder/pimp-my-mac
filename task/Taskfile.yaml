@@ -1,0 +1,27 @@
+version: '3'
+
+tasks:
+  from-home:
+    cmds:
+      - pwd
+
+  from-working-directory:
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - pwd
+
+  dedup-underscores:
+    desc: 'Rename files matching MASK by collapsing sequential underscores into one (e.g. foo__bar -> foo_bar). Usage: task dedup-underscores MASK="*.txt"'
+    dir: '{{.USER_WORKING_DIR}}'
+    vars:
+      MASK: '{{.MASK | default "*"}}'
+    cmds:
+      - rename --verbose 's/_{2,}/_/g' {{.MASK}}
+
+  prefix-sequence:
+    desc: 'Rename files matching MASK by prepending a sequential two-digit number and dash (e.g. file.txt -> 01-file.txt). Usage: task prefix-sequence MASK="*.txt"'
+    dir: '{{.USER_WORKING_DIR}}'
+    vars:
+      MASK: '{{.MASK | default "*"}}'
+    cmds:
+      - rename --verbose 's/^/sprintf("%02d-", $N)/e' {{.MASK}}
