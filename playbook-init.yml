@@ -4,8 +4,9 @@
   hosts: localhost
   connection: local
   gather_facts: true
-  vars_files:
-    - "arch/{{ ansible_architecture }}.yaml"
+  # vars_files:
+  #   # - "arch/{{ ansible_architecture }}.yaml"
+  #   - 'arch/{{ansible_facts["architecture"]}}.yaml'
   vars:
     # Set to `yes` so brew tasks do not abort the run for already-installed packages;
     # brew exits non-zero in that case, which would otherwise be treated as a failure.
@@ -92,6 +93,7 @@
       - dozer
       - jordanbaird-ice
       - go-task/tap/go-task
+      - karabiner-elements
     vscode_extensions:
       - aaron-bond.better-comments
       - adammaras.overtype
@@ -152,6 +154,12 @@
         linkname: "~/.gitmessage"
 
   tasks:
+    - name: "Load arch-specific vars for {{ ansible_facts['architecture'] }}"
+      tags:
+        - always
+        - arch_vars
+      include_vars:
+        file: 'arch/{{ ansible_facts["architecture"] }}.yaml'
     - name: Create needed folders
       tags:
         - always
