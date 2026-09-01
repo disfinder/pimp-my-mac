@@ -77,11 +77,19 @@ then
     bind '"\e[B": history-search-forward'
 fi
 
-# Add the following lines to your ~/.bash_profile:
-  if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    echo "Source brew bash completion"
-    source $(brew --prefix)/etc/bash_completion
-  fi
+# bash-completion@2 provides _init_completion, needed by `task` and other modern
+# completion scripts. Requires bash >= 4.1 — i.e. the Homebrew bash, not the
+# macOS system bash 3.2 (see the "Enforce bash shell" play: --tags bash_shell).
+if [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
+  source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+fi
+
+# go-task installs its completion into Homebrew's v1 dir, which @2 doesn't
+# reliably auto-load — register it straight from the binary so `task <TAB>`
+# completes task names (same approach as gh/kubectl).
+if command -v task >/dev/null 2>&1; then
+  eval "$(task --completion bash)"
+fi
 
 #You should set GROOVY_HOME:
 # export GROOVY_HOME=/usr/local/opt/groovy/libexec

@@ -26,7 +26,7 @@
       - awscli
       - bash
       - fzf
-      - bash-completion
+      - bash-completion@2
       - bash-git-prompt
       # - ccze   # have to comment since this package is gone
       - coreutils
@@ -186,6 +186,12 @@
         name: "{{ item }}"
         state: present
       with_items: "{{ brew_repositories }}"
+    - name: Remove legacy bash-completion v1 (superseded by bash-completion@2)
+      tags: brew
+      failed_when: not ignore_brew_errors
+      homebrew:
+        name: bash-completion
+        state: absent
     - name: Setup needed brew packages
       tags: brew
       failed_when: not ignore_brew_errors
@@ -284,13 +290,21 @@
       tags:
         - bash_shell
       block:
+        - name: Ensure Homebrew bash is registered in /etc/shells
+          tags:
+            - never
+          become: true
+          ansible.builtin.lineinfile:
+            path: /etc/shells
+            line: "{{ homebrew_bash }}"
+            state: present
         - name: Ensure bash is set as user shell for user "{{ current_user }}"
           tags:
             - never
           become: true
           user:
             name: "{{ current_user }}"
-            shell: /bin/bash
+            shell: "{{ homebrew_bash }}"
 
     # common and project-related brew pakages/items are not combined
     # for purpose - to split the tasks and allow to run them separately
