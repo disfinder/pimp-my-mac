@@ -524,6 +524,48 @@
         value: "~/Documents/pictures/screenshots"
         state: present
 
+    - name: Install Ukrainian Typography Keyboard layout
+      # Manual install: download the repo zip, extract it, and copy the .bundle
+      # into the user Keyboard Layouts folder. After a re-login, activate it via
+      # System Settings -> Keyboard -> Input Sources.
+      # https://github.com/AntonShevchuk/ukrainian-typography-keyboard-layout
+      tags:
+        - keyboard
+        - ukrainian_keyboard
+      vars:
+        uk_kbd_archive_url: "https://github.com/AntonShevchuk/ukrainian-typography-keyboard-layout/archive/refs/heads/master.zip"
+        uk_kbd_extract_dir: "{{ temp_folder }}/ukrainian-typography-keyboard-layout-master"
+        uk_kbd_bundle: ukrainian-typography.bundle
+        uk_kbd_dest: "~/Library/Keyboard Layouts"
+      block:
+        - name: Ensure the user Keyboard Layouts folder exists
+          ansible.builtin.file:
+            path: "{{ uk_kbd_dest }}"
+            state: directory
+            mode: "0755"
+
+        - name: Check whether the layout is already installed
+          ansible.builtin.stat:
+            path: "{{ uk_kbd_dest }}/{{ uk_kbd_bundle }}"
+          register: uk_kbd_installed
+
+        - name: Download and install the layout when missing
+          when: not uk_kbd_installed.stat.exists
+          block:
+            - name: Download and unpack the layout archive
+              ansible.builtin.unarchive:
+                src: "{{ uk_kbd_archive_url }}"
+                dest: "{{ temp_folder }}"
+                remote_src: true
+                creates: "{{ uk_kbd_extract_dir }}"
+
+            - name: Copy the .bundle into the Keyboard Layouts folder
+              ansible.builtin.copy:
+                src: "{{ uk_kbd_extract_dir }}/{{ uk_kbd_bundle }}"
+                dest: "{{ uk_kbd_dest }}/"
+                remote_src: true
+                mode: preserve
+
     - name: Configure GitHub cli
       tags:
         - gh
