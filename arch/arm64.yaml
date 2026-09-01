@@ -1,1 +1,2 @@
 bash_completion_dir: '/opt/homebrew/etc/bash_completion.d/'
+homebrew_bash: /opt/homebrew/bin/bash
